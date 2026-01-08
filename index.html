@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>魔法Book</title>
+  <meta name="description" content="物語とぬいぐるみ。琥珀の空と海のあいだに、灯台が立つ。" />
+  <style>
+    :root{
+      /* 空：暗めの琥珀 / 海：暗めのブルーグリーン */
+      --sky-0:#2a1a12;
+      --sky-1:#3b2415;
+      --sky-2:#4a2b18;
+
+      --sea-0:#072626;
+      --sea-1:#0a3434;
+      --sea-2:#0d4746;
+
+      --honey-0:#f6d27a;
+      --honey-1:#ffcf67;
+      --honey-2:#ffd98f;
+
+      --text:#f4efe6;
+      --muted:rgba(244,239,230,.72);
+      --glass:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.15);
+      --shadow:rgba(0,0,0,.35);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; margin:0; }
+    body{
+      font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+      color:var(--text);
+      overflow:hidden;
+      background:#000;
+    }
+
+    /* 全面のシーン */
+    .scene{
+      position:fixed;
+      inset:0;
+      display:grid;
+      grid-template-rows: 66.666% 33.334%;
+    }
+
+    .sky{
+      position:relative;
+      background:
+        radial-gradient(1200px 700px at 25% 30%, rgba(255,211,135,.14), transparent 55%),
+        radial-gradient(900px 600px at 75% 35%, rgba(255,185,90,.10), transparent 60%),
+        linear-gradient(180deg, var(--sky-0), var(--sky-1) 55%, var(--sky-2));
+      overflow:hidden;
+    }
+
+    .sea{
+      position:relative;
+      background:
+        radial-gradient(900px 320px at 20% 10%, rgba(116,245,220,.10), transparent 60%),
+        linear-gradient(180deg, var(--sea-0), var(--sea-1) 55%, var(--sea-2));
+      overflow:hidden;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* 境界線（水平線） */
+    .horizon{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-1px;
+      height:2px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(255,217,143,.22) 18%,
+        rgba(255,255,255,.10) 50%,
+        rgba(90,230,200,.18) 82%,
+        transparent
+      );
+      filter: blur(.2px);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    /* UI */
+    .ui{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding: clamp(18px, 4vw, 40px);
+      pointer-events:none;
+    }
+
+    .card{
+      width:min(980px, 100%);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 18px 60px rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      pointer-events:auto;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width: 220px;
+    }
+    .brand .name{
+      font-size: 20px;
+      letter-spacing: .08em;
+      font-weight: 700;
+      text-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .brand .tag{
+      font-size: 13px;
+      color:var(--muted);
+      letter-spacing:.03em;
+    }
+
+    nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+
+    a.pill{
+      text-decoration:none;
+      color:var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.10);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      box-shadow: 0 10px 26px rgba(0,0,0,.16);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size: 14px;
+      letter-spacing:.04em;
+    }
+    a.pill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.26);
+    }
+    a.pill:active{ transform: translateY(0px) scale(.99); }
+
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--honey-2), var(--honey-1) 45%, rgba(255,160,60,.35) 72%, transparent 78%);
+      box-shadow: 0 0 12px rgba(255,210,120,.35);
+      flex:0 0 auto;
+    }
+
+    /* 下部のフッター風メッセージ */
+    .footer{
+      position:fixed;
+      left:0; right:0;
+      bottom:0;
+      padding: 18px 22px;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .footer .note{
+      width:min(980px, 100%);
+      color: rgba(244,239,230,.78);
+      font-size: 12.5px;
+      letter-spacing:.02em;
+      line-height:1.6;
+      text-shadow: 0 10px 24px rgba(0,0,0,.28);
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.10);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* キャンバスたち */
+    canvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    /* 灯台（CSSのシンプル台形） */
+    .lighthouse{
+      position:absolute;
+      left:50%;
+      top: 36%; /* 海との境界から伸びる */
+      transform: translateX(-50%);
+      width: clamp(72px, 11vw, 120px);
+      height: clamp(260px, 42vh, 305px);
+      pointer-events:none;
+      filter: drop-shadow(0 26px 50px rgba(0,0,0,.35));
+    }
+    .lighthouse::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      /* 台形：上が少し細い */
+      clip-path: polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%);
+      background: linear-gradient(180deg,
+        rgba(214,214,214,.92),
+        rgba(180,180,180,.85) 55%,
+        rgba(150,150,150,.78)
+      );
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    /* レスポンシブ微調整 */
+    @media (max-width:520px){
+      .brand{ min-width: 0; }
+      .brand .name{ font-size:18px; }
+      a.pill{ padding: 9px 12px; font-size: 13px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scene" aria-hidden="true">
+    <div class="sky" id="sky">
+      <canvas id="skyFX"></canvas>
+      <div class="horizon"></div>
+    </div>
+
+    <div class="sea" id="sea">
+      <canvas id="seaFX"></canvas>
+    </div>
+
+    <!-- 境界から伸びる灯台 -->
+    <div class="lighthouse" aria-hidden="true"></div>
+  </div>
+
+  <div class="ui">
+    <div class="card">
+      <div class="brand">
+        <div class="name">魔法Book</div>
+        <div class="tag">琥珀の空と海のあいだで、ものがたりとぬいぐるみを。</div>
+      </div>
+
+      <nav aria-label="カテゴリー">
+        <a class="pill" href="#story"><span class="dot"></span>物語</a>
+        <a class="pill" href="#plush"><span class="dot"></span>ぬいぐるみ</a>
+      </nav>
+    </div>
+  </div>
+  <!--
+  <div class="footer">
+    <div class="note">
+      ここは仮のトップページです。リンク先（#story / #plush）にセクションや別ページを増やしていけます。
+    </div>
+  </div>
+  -->
+
+  <script>
+    // -------------- 便利関数 --------------
+    const DPR = () => Math.min(2, window.devicePixelRatio || 1);
+
+    function fitCanvas(canvas){
+      const dpr = DPR();
+      const rect = canvas.getBoundingClientRect();
+      canvas.width  = Math.floor(rect.width  * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      return {ctx, w: rect.width, h: rect.height};
+    }
+
+    // -------------- 空：蜂蜜色の光の点が渦巻く --------------
+    const skyCanvas = document.getElementById("skyFX");
+    let sky = {ctx:null,w:0,h:0};
+
+    const swarm = [];
+    function initSwarm(){
+      swarm.length = 0;
+      const count = 500;
+      const center = { x: sky.w * 0.5, y: sky.h * 0.58 }; // 灯台上付近に寄せる
+      const baseR = Math.min(sky.w, sky.h) * 0.10;
+
+      for(let i=0;i<count;i++){
+        const t = Math.random() * Math.PI * 2;
+        // 中心に寄るほど密度が高くなる分布
+        const u = Math.random();
+        const bias = u * u * u * u; // ← 二次分布（中心寄り）
+        const r = baseR * (0.15 + bias * 1.6);
+        
+        swarm.push({
+          // 極座標っぽく扱う
+          a: t,
+          r: r,
+          // ばらつきと個性
+          spin: (0.12 + Math.random()*0.22) * (Math.random()<0.5 ? -1 : 1),
+          drift: (Math.random()*0.6 + 0.2),
+          size: 0.8 + (1 - bias) * 10,
+          tw: Math.random()*Math.PI*2,
+          tws: 0.6 + Math.random()*1.2,
+          // 明るさ差
+          b: 0.35 + Math.random()*0.65,
+          // ゆらぎ
+          jitter: 0.4 + Math.random()*1.2,
+          cx: center.x,
+          cy: center.y,
+        });
+      }
+    }
+
+    function drawSky(time){
+      const ctx = sky.ctx;
+      ctx.clearRect(0,0,sky.w,sky.h);
+
+      // ほんのり霞
+      ctx.globalCompositeOperation = "source-over";
+      const haze = ctx.createRadialGradient(sky.w*0.5, sky.h*0.55, 0, sky.w*0.5, sky.h*0.55, Math.max(sky.w, sky.h)*0.75);
+      haze.addColorStop(0, "rgba(255,210,120,0.07)");
+      haze.addColorStop(0.5, "rgba(255,170,90,0.03)");
+      haze.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = haze;
+      ctx.fillRect(0,0,sky.w,sky.h);
+
+      // 光の粒
+      const centerX = sky.w * 0.5;
+      const horizonY = sky.h;               // 空キャンバスの下端が水平線
+      const lighthouseTopY = sky.h * 0.40;  // 灯台上あたり
+      const anchorY = lighthouseTopY + sky.h * 0.12;
+
+      ctx.globalCompositeOperation = "lighter";
+      for(const p of swarm){
+        const tt = time * 0.001;
+        p.a += p.spin * 0.015;
+        p.tw += p.tws * 0.02;
+
+        // 渦の中心を灯台上へ引き寄せる
+        p.cx = centerX;
+        p.cy = anchorY;
+
+        const wob = Math.sin(p.tw) * p.jitter;
+        const rr  = p.r + wob * 6;
+
+        const x = p.cx + Math.cos(p.a) * rr;
+        const y = p.cy + Math.sin(p.a) * rr * 0.75;
+
+        // 上に向かって少し伸びる演出（境界から上方向）
+        const lift = (Math.sin(tt * 0.9 + p.r*0.02) * 0.5 + 0.5) * 14;
+        const yy = y - lift;
+
+        // 色：蜂蜜系、明るさ違い
+        const alpha = 0.10 + p.b * 0.22;
+        const g = ctx.createRadialGradient(x, yy, 0, x, yy, p.size * 6.5);
+        g.addColorStop(0, `rgba(255, 222, 150, ${alpha})`);
+        g.addColorStop(0.35, `rgba(255, 205, 105, ${alpha*0.75})`);
+        g.addColorStop(1, `rgba(255, 170, 60, 0)`);
+
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, yy, p.size * (1.2 + Math.sin(p.tw)*0.25), 0, Math.PI*2);
+        ctx.fill();
+      }
+
+//      // ほんのり縦の光芒（灯台の上のほう）
+//      ctx.globalCompositeOperation = "screen";
+//      const beam = ctx.createLinearGradient(centerX, horizonY, centerX, lighthouseTopY - 20);
+//      beam.addColorStop(0, "rgba(255,205,110,0.00)");
+//      beam.addColorStop(0.55, "rgba(255,205,110,0.06)");
+//      beam.addColorStop(1, "rgba(255,235,180,0.00)");
+//      ctx.fillStyle = beam;
+//      ctx.fillRect(centerX - sky.w*0.12, lighthouseTopY - 60, sky.w*0.24, sky.h);
+    }
+
+    // -------------- 海：穏やかな波の揺れ --------------
+    const seaCanvas = document.getElementById("seaFX");
+    let sea = {ctx:null,w:0,h:0};
+
+    function drawSea(time){
+      const ctx = sea.ctx;
+      ctx.clearRect(0,0,sea.w,sea.h);
+
+      const t = time * 0.001;
+
+      // 水面のうねり（水平線に近いところを強め、下は穏やか）
+      const bands = 14;
+      for(let i=0;i<bands;i++){
+        const y = (i/(bands-1)) * sea.h;
+        const p = 1 - (y/sea.h); // 上ほど大きい
+        const amp = 6 * p + 1.4;
+        const freq = 0.010 + i*0.0009;
+
+        ctx.beginPath();
+        for(let x=0;x<=sea.w;x+=8){
+          const phase = t*1.0 + i*0.42;
+          const wave =
+            Math.sin(x*freq + phase) * amp +
+            Math.sin(x*(freq*0.6) - phase*0.8) * (amp*0.45);
+          const yy = y + wave;
+          if(x===0) ctx.moveTo(x, yy);
+          else ctx.lineTo(x, yy);
+        }
+
+        // 線は「泡」っぽく薄く
+        const a = 0.05 + p*0.09;
+        ctx.strokeStyle = `rgba(210, 255, 245, ${a})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // 反射のほのかな光（灯台光の余韻）
+      const glowX = sea.w*0.5;
+      const glow = ctx.createRadialGradient(glowX, sea.h*0.05, 0, glowX, sea.h*0.08, sea.w*0.55);
+      glow.addColorStop(0, "rgba(255,215,140,0.08)");
+      glow.addColorStop(0.35, "rgba(160,255,235,0.05)");
+      glow.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0,0,sea.w,sea.h);
+    }
+
+    // -------------- ループ & リサイズ --------------
+    function resize(){
+      sky = fitCanvas(skyCanvas);
+      sea = fitCanvas(seaCanvas);
+      initSwarm();
+    }
+
+    let rafId = null;
+    function loop(time){
+      drawSky(time);
+      drawSea(time);
+      rafId = requestAnimationFrame(loop);
+    }
+
+    window.addEventListener("resize", () => {
+      resize();
+    }, {passive:true});
+
+    // 初期化
+    resize();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
