@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>物語選択ページ</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #2a1a12;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .story-selection-page {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      /* カード間の縦の間隔 */
+      padding: 30px;
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #f0f0f0;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .story-card {
+      display: flex;
+      align-items: center;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      text-decoration: none;
+      color: #333;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .story-card:hover {
+      background-color: #f6d27a;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+    }
+
+    canvas {
+      flex-shrink: 0;
+      /* キャンバスが縮まないようにする */
+      width: 120px;
+      height: 120px;
+      margin-right: 25px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+
+    .story-details {
+      flex-grow: 1;
+      /* 残りのスペースを埋める */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .story-title {
+      margin: 0 0 8px 0;
+      color: #2c3e50;
+      font-size: 1.8em;
+      font-weight: 700;
+    }
+
+    .story-excerpt {
+      margin: 0;
+      color: #666;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .story-selection-page {
+        padding: 20px;
+        margin: 20px auto;
+      }
+
+      .story-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      canvas {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100px;
+        height: 100px;
+      }
+
+      .story-title {
+        font-size: 1.5em;
+      }
+
+      .story-excerpt {
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="story-selection-page">
+    <a href="#story1" class="story-card" id="storyCard1">
+      <canvas id="storyImage1"></canvas>
+      <div class="story-details">
+        <h2 class="story-title">不思議な森の冒険</h2>
+        <p class="story-excerpt">迷い込んだ森で出会う、新しい発見と友情の物語。</p>
+      </div>
+    </a>
+
+    <a href="#story2" class="story-card" id="storyCard2">
+      <canvas id="storyImage2"></canvas>
+      <div class="story-details">
+        <h2 class="story-title">宇宙を駆ける旅人</h2>
+        <p class="story-excerpt">遥かな星々を巡り、未知の文明との交流を描くSFファンタジー。</p>
+      </div>
+    </a>
+
+    <a href="#story3" class="story-card" id="storyCard3">
+      <canvas id="storyImage3"></canvas>
+      <div class="story-details">
+        <h2 class="story-title">過去からの手紙</h2>
+        <p class="story-excerpt">時を超えて届けられた手紙が、隠された真実を解き明かすミステリー。</p>
+      </div>
+    </a>
+
+    <a href="#story4" class="story-card" id="storyCard4">
+      <canvas id="storyImage4"></canvas>
+      <div class="story-details">
+        <h2 class="story-title">幻の島の宝</h2>
+        <p class="story-excerpt">伝説に隠された財宝を求め、危険な冒険に挑む海賊たちの物語。</p>
+      </div>
+    </a>
+  </div>
+
+  <script>
+    function drawStoryImage(canvasId, fillColor, strokeColor) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const size = canvas.width;
+      ctx.clearRect(0, 0, size, size);
+      // 背景色
+      ctx.fillStyle = '#fefefe';
+      ctx.fillRect(0, 0, size, size);
+      // 中心に丸い図形を描画
+      ctx.beginPath();
+      ctx.arc(size / 2, size / 2, size / 3, 0, Math.PI * 2, false);
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+      // 小さな星のようなアクセントを描画
+      for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.arc(
+          Math.random() * size * 0.6 + size * 0.2,
+          Math.random() * size * 0.6 + size * 0.2,
+          Math.random() * 3 + 2,
+          0,
+          Math.PI * 2,
+          false
+        );
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fill();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      drawStoryImage('storyImage1', '#64B5F6', '#2196F3'); // 青系
+      drawStoryImage('storyImage2', '#FFB74D', '#FF9800'); // オレンジ系
+      drawStoryImage('storyImage3', '#81C784', '#4CAF50'); // 緑系
+      drawStoryImage('storyImage4', '#E0646D', '#D32F2F'); // 赤系
+    });
+  </script>
+</body>
+
+</html>
