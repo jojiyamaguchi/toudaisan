@@ -44,14 +44,16 @@
       transform: translateY(-3px);
     }
 
-    canvas {
+    .story-card img {
       flex-shrink: 0;
-      /* キャンバスが縮まないようにする */
+      /* 画像が縮まないようにする */
       width: 120px;
       height: 120px;
       margin-right: 25px;
       border: 2px solid #ddd;
       border-radius: 8px;
+      object-fit: cover;
+      /* 画像が要素に収まるように調整 */
       background-color: #fff;
     }
 
@@ -88,7 +90,7 @@
         align-items: flex-start;
       }
 
-      canvas {
+      .story-card img {
         margin-right: 0;
         margin-bottom: 15px;
         width: 100px;
@@ -109,79 +111,22 @@
 <body>
   <div class="story-selection-page">
     <a href="#story1" class="story-card" id="storyCard1">
-      <canvas id="storyImage1"></canvas>
+      <img id="storyImage1" src="https://picsum.photos/id/237/120/120" alt="灯台さんと琥珀の空の画像">
       <div class="story-details">
-        <h2 class="story-title">不思議な森の冒険</h2>
-        <p class="story-excerpt">迷い込んだ森で出会う、新しい発見と友情の物語。</p>
+        <h2 class="story-title">灯台さんと琥珀の空</h2>
+        <p class="story-excerpt">穏やかな世界である秘密を知ってしまった灯台さんの決断</p>
       </div>
     </a>
 
     <a href="#story2" class="story-card" id="storyCard2">
-      <canvas id="storyImage2"></canvas>
+      <img id="storyImage2" src="https://picsum.photos/id/238/120/120" alt="背の国報告書の画像">
       <div class="story-details">
-        <h2 class="story-title">宇宙を駆ける旅人</h2>
-        <p class="story-excerpt">遥かな星々を巡り、未知の文明との交流を描くSFファンタジー。</p>
+        <h2 class="story-title">背の国報告書</h2>
+        <p class="story-excerpt">巨大ガニの甲羅の上にある国に関する報告書</p>
       </div>
     </a>
 
-    <a href="#story3" class="story-card" id="storyCard3">
-      <canvas id="storyImage3"></canvas>
-      <div class="story-details">
-        <h2 class="story-title">過去からの手紙</h2>
-        <p class="story-excerpt">時を超えて届けられた手紙が、隠された真実を解き明かすミステリー。</p>
-      </div>
-    </a>
-
-    <a href="#story4" class="story-card" id="storyCard4">
-      <canvas id="storyImage4"></canvas>
-      <div class="story-details">
-        <h2 class="story-title">幻の島の宝</h2>
-        <p class="story-excerpt">伝説に隠された財宝を求め、危険な冒険に挑む海賊たちの物語。</p>
-      </div>
-    </a>
   </div>
-
-  <script>
-    function drawStoryImage(canvasId, fillColor, strokeColor) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const size = canvas.width;
-      ctx.clearRect(0, 0, size, size);
-      // 背景色
-      ctx.fillStyle = '#fefefe';
-      ctx.fillRect(0, 0, size, size);
-      // 中心に丸い図形を描画
-      ctx.beginPath();
-      ctx.arc(size / 2, size / 2, size / 3, 0, Math.PI * 2, false);
-      ctx.fillStyle = fillColor;
-      ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = strokeColor;
-      ctx.stroke();
-      // 小さな星のようなアクセントを描画
-      for (let i = 0; i < 4; i++) {
-        ctx.beginPath();
-        ctx.arc(
-          Math.random() * size * 0.6 + size * 0.2,
-          Math.random() * size * 0.6 + size * 0.2,
-          Math.random() * 3 + 2,
-          0,
-          Math.PI * 2,
-          false
-        );
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.fill();
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      drawStoryImage('storyImage1', '#64B5F6', '#2196F3'); // 青系
-      drawStoryImage('storyImage2', '#FFB74D', '#FF9800'); // オレンジ系
-      drawStoryImage('storyImage3', '#81C784', '#4CAF50'); // 緑系
-      drawStoryImage('storyImage4', '#E0646D', '#D32F2F'); // 赤系
-    });
-  </script>
 </body>
 
 </html>
