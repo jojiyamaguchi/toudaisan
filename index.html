@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>灯台さん.com</title>
-  <meta name="description" content="物語とぬいぐるみ。琥珀の空と海のあいだに、灯台が立つ。" />
+  <title id="pageTitle">灯台さん.com</title>
+  <meta name="description" id="pageDescription" content="物語とぬいぐるみ。琥珀の空と海のあいだに、灯台が立つ。" />
   <style>
     :root{
       /* 空：暗めの琥珀 / 海：暗めのブルーグリーン */
@@ -367,18 +367,18 @@
   <div class="ui">
     <div class="card">
         <div class="brand">
-          <div class="name">灯台さん.com</div>
-          <div class="tag">琥珀の空と海のあいだで、ものがたりとぬいぐるみを。</div>
+          <div class="name" id="brandName">灯台さん.com</div>
+          <div class="tag" id="brandTag">琥珀の空と海のあいだで、ものがたりとぬいぐるみを。</div>
           <nav aria-label="カテゴリー">
-            <a class="pill" href="story"><span class="dot"></span>物語</a>
-            <a class="pill" href="#plush"><span class="dot"></span>ぬいぐるみ</a>
+            <a class="pill" href="story" id="storyLink"><span class="dot"></span><span data-lang-text="storyLink">物語</span></a>
+            <a class="pill" href="#plush" id="plushLink"><span class="dot"></span><span data-lang-text="plushLink">ぬいぐるみ</span></a>
           </nav>
         </div>
     </div>
   </div>
   <!--
   <div class="footer">
-    <div class="note">
+    <div class="note" id="footerNote">
       ここは仮のトップページです。リンク先（#story / #plush）にセクションや別ページを増やしていけます。
     }
   </div>
@@ -768,6 +768,69 @@
     window.addEventListener("resize", () => {
       resize();
     }, {passive:true});
+
+    // 言語設定のための翻訳データ
+    const translations = {
+      "ja": {
+        "title": "灯台さん.com",
+        "description": "物語とぬいぐるみ。琥珀の空と海のあいだに、灯台が立つ。",
+        "brandName": "灯台さん.com",
+        "brandTag": "琥珀の空と海のあいだで、ものがたりとぬいぐるみを。",
+        "storyLink": "物語",
+        "plushLink": "ぬいぐるみ",
+        // "footerNote": "ここは仮のトップページです。リンク先（#story / #plush）にセクションや別ページを増やしていけます。"
+      },
+      "en": {
+        "title": "Lighthouse-san.com",
+        "description": "Stories and plush toys. A lighthouse stands between the amber sky and the sea.",
+        "brandName": "Lighthouse-san.com",
+        "brandTag": "Stories and plush toys between the amber sky and the sea.",
+        "storyLink": "Stories",
+        "plushLink": "Plush Toys",
+        // "footerNote": "This is a temporary top page. You can add sections or separate pages to the links (#story / #plush)."
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const userLang = navigator.language || navigator.userLanguage; // ユーザーの言語設定を取得
+        const langKey = userLang.startsWith("ja") ? "ja" : "en"; // 日本語か英語か判定
+
+        // HTMLのlang属性を設定
+        document.documentElement.lang = langKey;
+
+        const currentTranslations = translations[langKey];
+
+        // タイトルとdescription
+        document.getElementById("pageTitle").textContent = currentTranslations.title;
+        document.getElementById("pageDescription").setAttribute("content", currentTranslations.description);
+
+        // ブランド名とタグ
+        document.getElementById("brandName").textContent = currentTranslations.brandName;
+        document.getElementById("brandTag").textContent = currentTranslations.brandTag;
+
+        // ナビゲーションリンク
+        const storyLinkElement = document.getElementById("storyLink");
+        const plushLinkElement = document.getElementById("plushLink");
+
+        // a.pillの中のテキスト部分をspanで囲み、data-lang-text属性で選択して内容を更新
+        storyLinkElement.querySelector("span[data-lang-text]").textContent = currentTranslations.storyLink;
+        plushLinkElement.querySelector("span[data-lang-text]").textContent = currentTranslations.plushLink;
+
+        // 言語に基づいてリンクのhref属性を切り替える
+        if (langKey === "en") {
+            storyLinkElement.href = "story_en";
+            plushLinkElement.href = "#plush_en";
+        } else {
+            storyLinkElement.href = "story"; // 日本語の場合のデフォルト
+            plushLinkElement.href = "#plush"; // 日本語の場合のデフォルト
+        }
+
+        // フッターノート (コメントアウトされているが、もし有効にするなら)
+        // const footerNote = document.getElementById("footerNote");
+        // if (footerNote) {
+        //     footerNote.textContent = currentTranslations.footerNote;
+        // }
+    });
 
     // 初期化
     resize();
