@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story selection page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #2a1a12;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .story-selection-page {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      /* カード間の縦の間隔 */
+      padding: 30px;
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #f0f0f0;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .story-card {
+      display: flex;
+      align-items: center;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      text-decoration: none;
+      color: #333;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .story-card:hover {
+      background-color: #f6d27a;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .story-card img {
+      flex-shrink: 0;
+      /* 画像が縮まないようにする */
+      width: 120px;
+      height: 120px;
+      margin-right: 25px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      object-fit: cover;
+      /* 画像が要素に収まるように調整 */
+      background-color: #fff;
+    }
+
+    .story-details {
+      flex-grow: 1;
+      /* 残りのスペースを埋める */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .story-title {
+      margin: 0 0 8px 0;
+      color: #2c3e50;
+      font-size: 1.8em;
+      font-weight: 700;
+    }
+
+    .story-excerpt {
+      margin: 0;
+      color: #666;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .story-selection-page {
+        padding: 20px;
+        margin: 20px auto;
+      }
+
+      .story-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .story-card img {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100px;
+        height: 100px;
+      }
+
+      .story-title {
+        font-size: 1.5em;
+      }
+
+      .story-excerpt {
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="story-selection-page">
+    <a href="story1" class="story-card" id="storyCard1">
+      <img id="storyImage1" src="https://www.toudaisan.com/story/story1.jpg" alt="Toudai-san and the amber sky">
+      <div class="story-details">
+        <h2 class="story-title">Toudai-san and the amber sky</h2>
+        <p class="story-excerpt">One day, a "lighthouse" living in a peaceful world discovers the secret of the world.</p>
+      </div>
+    </a>
+  </div>
+</body>
+
+</html>
