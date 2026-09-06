@@ -371,7 +371,7 @@
           <div class="tag" id="brandTag">琥珀の空と海のあいだで、ものがたりとぬいぐるみを。</div>
           <nav aria-label="カテゴリー">
             <a class="pill" href="story" id="storyLink"><span class="dot"></span><span data-lang-text="storyLink">物語</span></a>
-            <a class="pill" href="#plush" id="plushLink"><span class="dot"></span><span data-lang-text="plushLink">ぬいぐるみ</span></a>
+            <a class="pill" href="plush" id="plushLink"><span class="dot"></span><span data-lang-text="plushLink">ぬいぐるみ</span></a>
           </nav>
         </div>
     </div>
@@ -819,10 +819,10 @@
         // 言語に基づいてリンクのhref属性を切り替える
         if (langKey === "en") {
             storyLinkElement.href = "story_en";
-            plushLinkElement.href = "#plush_en";
+            plushLinkElement.href = "plush";
         } else {
             storyLinkElement.href = "story"; // 日本語の場合のデフォルト
-            plushLinkElement.href = "#plush"; // 日本語の場合のデフォルト
+            plushLinkElement.href = "plush"; // 日本語の場合のデフォルト
         }
 
         // フッターノート (コメントアウトされているが、もし有効にするなら)
