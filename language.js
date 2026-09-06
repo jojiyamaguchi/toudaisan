@@ -48,19 +48,21 @@
   }
 
   var requestedLanguage = new URLSearchParams(window.location.search).get('lang');
-  if (requestedLanguage !== 'ja' && requestedLanguage !== 'en') {
-    requestedLanguage = null;
+  requestedLanguage = requestedLanguage ? requestedLanguage.toLowerCase() : null;
+
+  if (requestedLanguage === 'jp') {
+    requestedLanguage = 'ja';
   }
 
-  if (requestedLanguage) {
-    savePreference(requestedLanguage);
+  if (requestedLanguage !== 'ja' && requestedLanguage !== 'en') {
+    requestedLanguage = null;
   }
 
   function addNavigationContext(path) {
     var destinationUrl = new URL(path, window.location.origin);
     var currentParameters = new URLSearchParams(window.location.search);
 
-    ['nfc', 'type', 'bonus'].forEach(function (name) {
+    ['nfc', 'type', 'bonus', 'lang'].forEach(function (name) {
       if (currentParameters.has(name) && !destinationUrl.searchParams.has(name)) {
         destinationUrl.searchParams.set(name, currentParameters.get(name));
       }
