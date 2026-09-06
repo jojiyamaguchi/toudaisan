@@ -56,8 +56,21 @@
     savePreference(requestedLanguage);
   }
 
+  function addNavigationContext(path) {
+    var destinationUrl = new URL(path, window.location.origin);
+    var currentParameters = new URLSearchParams(window.location.search);
+
+    ['nfc', 'type', 'bonus'].forEach(function (name) {
+      if (currentParameters.has(name)) {
+        destinationUrl.searchParams.set(name, currentParameters.get(name));
+      }
+    });
+
+    return destinationUrl.pathname + destinationUrl.search + destinationUrl.hash;
+  }
+
   var selectedLanguage = requestedLanguage || readPreference() || browserPreference();
-  var destination = selectedLanguage === 'en' ? englishPath : japanesePath;
+  var destination = addNavigationContext(selectedLanguage === 'en' ? englishPath : japanesePath);
   var isRouter = root.hasAttribute('data-language-router');
   var pageLanguage = (root.getAttribute('lang') || '').toLowerCase().split('-')[0];
 

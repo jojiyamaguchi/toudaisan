@@ -6,6 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>灯台さんのページを開いています | 灯台さん.com</title>
   <meta name="robots" content="noindex, follow">
+  <script>
+    (function () {
+      var routes = {
+        concept: {
+          ja: '/plush/toudaisan/concept/',
+          en: '/plush_en/toudaisan/concept/',
+          bonusCount: 5
+        }
+      };
+      var parameters = new URLSearchParams(window.location.search);
+      var requestedType = (parameters.get('type') || 'concept').toLowerCase();
+      var selectedType = Object.prototype.hasOwnProperty.call(routes, requestedType)
+        ? requestedType
+        : 'concept';
+      var route = routes[selectedType];
+      var bonusIndex = Math.floor(Math.random() * route.bonusCount);
+      var navigationParameters = new URLSearchParams({
+        nfc: '1',
+        type: selectedType,
+        bonus: String(bonusIndex)
+      });
+
+      document.documentElement.dataset.jaPath = route.ja + '?' + navigationParameters.toString();
+      document.documentElement.dataset.enPath = route.en + '?' + navigationParameters.toString();
+    })();
+  </script>
   <script src="/language.js"></script>
   <style>
     :root {
@@ -69,8 +95,8 @@
     <h1>灯台さんのページを開いています</h1>
     <p>自動的に移動しない場合は、言語を選んでください。<br>Please select a language if you are not redirected.</p>
     <nav aria-label="Language selection">
-      <a href="/plush/toudaisan/concept/" data-set-language="ja" lang="ja">日本語</a>
-      <a href="/plush_en/toudaisan/concept/" data-set-language="en" lang="en">English</a>
+      <a href="/plush/toudaisan/concept/?nfc=1&type=concept" data-set-language="ja" lang="ja">日本語</a>
+      <a href="/plush_en/toudaisan/concept/?nfc=1&type=concept" data-set-language="en" lang="en">English</a>
     </nav>
   </main>
 </body>

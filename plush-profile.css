@@ -222,6 +222,43 @@ a {
   line-height: 1.7;
 }
 
+.plush-bonus {
+  position: relative;
+  overflow: hidden;
+  padding: 24px 28px;
+  border: 1px solid #e5ca86;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(246, 210, 122, 0.42), transparent 38%),
+    linear-gradient(135deg, #fffaf0, #fff3d6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.plush-bonus[hidden] {
+  display: none;
+}
+
+.bonus-label {
+  margin: 0 0 8px;
+  color: var(--accent-deep);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.bonus-title {
+  margin: 0 0 10px;
+  color: var(--heading);
+  font-size: 1.25rem;
+}
+
+.bonus-text {
+  margin: 0;
+  color: #5d4b30;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
 @media (max-width: 720px) {
   .profile-page {
     margin: 20px auto;
