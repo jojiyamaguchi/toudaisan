@@ -4,35 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ぬいぐるみ | 灯台さん.com</title>
+  <title>ぬいぐるみ選択ページ</title>
   <meta name="description" content="灯台さん.comのぬいぐるみ作品をカテゴリーから選んでご覧いただけます。">
   <style>
-    :root {
-      --background: #2a1a12;
-      --panel: #f0f0f0;
-      --card: #ffffff;
-      --text: #333333;
-      --heading: #2c3e50;
-      --muted: #666666;
-      --line: #e0e0e0;
-      --accent: #f6d27a;
-      --accent-dark: #8a5a16;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       padding: 0;
-      background-color: var(--background);
-      color: var(--text);
+      background-color: #2a1a12;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    button {
-      font: inherit;
     }
 
     .plush-selection-page {
@@ -42,175 +21,106 @@
       padding: 30px;
       max-width: 900px;
       margin: 40px auto;
-      background-color: var(--panel);
+      background-color: #f0f0f0;
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     }
 
-    .page-heading {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .page-title {
-      margin: 0;
-      color: var(--heading);
-      font-size: clamp(1.8rem, 5vw, 2.4rem);
-      line-height: 1.25;
-    }
-
-    .page-description {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-
-    .category-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .category-button {
-      min-height: 64px;
-      padding: 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--card);
-      color: var(--heading);
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.4;
-      text-align: center;
-      transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    .category-button:hover {
-      background-color: var(--accent);
-      border-color: var(--accent);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      transform: translateY(-2px);
-    }
-
-    .category-button:focus-visible {
-      outline: 3px solid var(--accent-dark);
-      outline-offset: 3px;
-    }
-
-    .category-button[aria-pressed="true"] {
-      background-color: var(--accent);
-      border-color: var(--accent-dark);
-      box-shadow: 0 6px 18px rgba(138, 90, 22, 0.18);
-    }
-
-    .plush-list {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-    }
-
-    .plush-card {
+    .category-card {
       display: flex;
       align-items: center;
-      padding: 20px;
-      border: 1px solid var(--line);
+      width: 100%;
+      border: 1px solid #e0e0e0;
       border-radius: 10px;
-      background-color: var(--card);
-      color: var(--text);
-      text-decoration: none;
+      padding: 20px;
+      background: transparent;
+      color: #333;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     }
 
-    .plush-card:hover {
-      background-color: var(--accent);
+    .category-card:hover,
+    .category-card[aria-pressed="true"] {
+      background-color: #f6d27a;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
       transform: translateY(-3px);
     }
 
-    .plush-card img {
+    .category-card:focus-visible {
+      outline: 3px solid #8a5a16;
+      outline-offset: 3px;
+    }
+
+    .category-image {
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 120px;
       height: 120px;
       margin-right: 25px;
-      border: 2px solid #dddddd;
+      border: 2px solid #ddd;
       border-radius: 8px;
-      background-color: var(--card);
-      object-fit: cover;
+      background-color: #fff;
+      color: #777;
+      font-size: 0.9em;
+      line-height: 1.5;
+      text-align: center;
     }
 
-    .plush-details {
+    .category-details {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    .plush-title {
-      margin: 0 0 8px;
-      color: var(--heading);
-      font-size: 1.8rem;
+    .category-title {
+      margin: 0 0 8px 0;
+      color: #2c3e50;
+      font-size: 1.8em;
       font-weight: 700;
     }
 
-    .plush-description {
+    .category-excerpt {
       margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
+      color: #666;
+      font-size: 1em;
       line-height: 1.6;
-    }
-
-    .empty-state {
-      margin: 0;
-      padding: 36px 20px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background-color: var(--card);
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      text-align: center;
     }
 
     @media (max-width: 768px) {
       .plush-selection-page {
         padding: 20px;
-        margin: 20px 12px;
+        margin: 20px auto;
       }
 
-      .category-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .plush-card {
+      .category-card {
         flex-direction: column;
         align-items: flex-start;
       }
 
-      .plush-card img {
+      .category-image {
         width: 100px;
         height: 100px;
         margin-right: 0;
         margin-bottom: 15px;
       }
 
-      .plush-title {
-        font-size: 1.5rem;
+      .category-title {
+        font-size: 1.5em;
       }
-    }
 
-    @media (max-width: 420px) {
-      .category-list {
-        grid-template-columns: 1fr;
+      .category-excerpt {
+        font-size: 0.9em;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .category-button,
-      .plush-card {
+      .category-card {
         transition: none;
       }
     }
@@ -218,84 +128,68 @@
 </head>
 
 <body>
-  <main class="plush-selection-page">
-    <header class="page-heading">
-      <h1 class="page-title">ぬいぐるみ</h1>
-      <p class="page-description">カテゴリーを選んでください。</p>
-    </header>
+  <main class="plush-selection-page" aria-label="ぬいぐるみのカテゴリー">
+    <button class="category-card" type="button" data-category="灯台さん" aria-pressed="false">
+      <span class="category-image" aria-hidden="true">画像準備中</span>
+      <span class="category-details">
+        <span class="category-title">灯台さん</span>
+        <span class="category-excerpt">作品画像は準備中です。</span>
+      </span>
+    </button>
 
-    <nav class="category-list" aria-label="ぬいぐるみのカテゴリー">
-      <button class="category-button" type="button" data-category="灯台さん" aria-pressed="true">灯台さん</button>
-      <button class="category-button" type="button" data-category="ニュコ" aria-pressed="false">ニュコ</button>
-      <button class="category-button" type="button" data-category="タイリクガニ" aria-pressed="false">タイリクガニ</button>
-      <button class="category-button" type="button" data-category="動物たち" aria-pressed="false">動物たち</button>
-      <button class="category-button" type="button" data-category="植物たち" aria-pressed="false">植物たち</button>
-      <button class="category-button" type="button" data-category="その他" aria-pressed="false">その他</button>
-    </nav>
+    <button class="category-card" type="button" data-category="ニュコ" aria-pressed="false">
+      <span class="category-image" aria-hidden="true">画像準備中</span>
+      <span class="category-details">
+        <span class="category-title">ニュコ</span>
+        <span class="category-excerpt">作品画像は準備中です。</span>
+      </span>
+    </button>
 
-    <section id="plushList" class="plush-list" aria-live="polite" aria-label="ぬいぐるみ作品">
-      <p class="empty-state">「灯台さん」の画像は準備中です。</p>
-    </section>
+    <button class="category-card" type="button" data-category="タイリクガニ" aria-pressed="false">
+      <span class="category-image" aria-hidden="true">画像準備中</span>
+      <span class="category-details">
+        <span class="category-title">タイリクガニ</span>
+        <span class="category-excerpt">作品画像は準備中です。</span>
+      </span>
+    </button>
+
+    <button class="category-card" type="button" data-category="動物たち" aria-pressed="false">
+      <span class="category-image" aria-hidden="true">画像準備中</span>
+      <span class="category-details">
+        <span class="category-title">動物たち</span>
+        <span class="category-excerpt">作品画像は準備中です。</span>
+      </span>
+    </button>
+
+    <button class="category-card" type="button" data-category="植物たち" aria-pressed="false">
+      <span class="category-image" aria-hidden="true">画像準備中</span>
+      <span class="category-details">
+        <span class="category-title">植物たち</span>
+        <span class="category-excerpt">作品画像は準備中です。</span>
+      </span>
+    </button>
+
+    <button class="category-card" type="button" data-category="その他" aria-pressed="false">
+      <span class="category-image" aria-hidden="true">画像準備中</span>
+      <span class="category-details">
+        <span class="category-title">その他</span>
+        <span class="category-excerpt">作品画像は準備中です。</span>
+      </span>
+    </button>
   </main>
 
   <script>
-    const plushItems = [];
+    const categoryCards = Array.from(document.querySelectorAll('.category-card'));
 
-    const categoryButtons = Array.from(document.querySelectorAll('.category-button'));
-    const plushList = document.getElementById('plushList');
+    categoryCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        const wasSelected = card.getAttribute('aria-pressed') === 'true';
 
-    function createPlushCard(item) {
-      const card = document.createElement('a');
-      card.className = 'plush-card';
-      card.href = item.href || '#';
+        categoryCards.forEach(function (otherCard) {
+          otherCard.setAttribute('aria-pressed', 'false');
+        });
 
-      const image = document.createElement('img');
-      image.src = item.image;
-      image.alt = item.alt || item.title;
-
-      const details = document.createElement('div');
-      details.className = 'plush-details';
-
-      const title = document.createElement('h2');
-      title.className = 'plush-title';
-      title.textContent = item.title;
-
-      const description = document.createElement('p');
-      description.className = 'plush-description';
-      description.textContent = item.description || '';
-
-      details.append(title, description);
-      card.append(image, details);
-      return card;
-    }
-
-    function showCategory(category) {
-      categoryButtons.forEach(function (button) {
-        button.setAttribute('aria-pressed', String(button.dataset.category === category));
-      });
-
-      const visibleItems = plushItems.filter(function (item) {
-        return item.category === category;
-      });
-
-      plushList.replaceChildren();
-
-      if (visibleItems.length === 0) {
-        const emptyState = document.createElement('p');
-        emptyState.className = 'empty-state';
-        emptyState.textContent = '「' + category + '」の画像は準備中です。';
-        plushList.appendChild(emptyState);
-        return;
-      }
-
-      visibleItems.forEach(function (item) {
-        plushList.appendChild(createPlushCard(item));
-      });
-    }
-
-    categoryButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        showCategory(button.dataset.category);
+        card.setAttribute('aria-pressed', String(!wasSelected));
       });
     });
   </script>
