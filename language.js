@@ -61,7 +61,7 @@
     var currentParameters = new URLSearchParams(window.location.search);
 
     ['nfc', 'type', 'bonus'].forEach(function (name) {
-      if (currentParameters.has(name)) {
+      if (currentParameters.has(name) && !destinationUrl.searchParams.has(name)) {
         destinationUrl.searchParams.set(name, currentParameters.get(name));
       }
     });
