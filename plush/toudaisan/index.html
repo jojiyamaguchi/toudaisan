@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>灯台さん | ぬいぐるみ | 灯台さん.com</title>
+  <meta name="description" content="さまざまな灯台さんのプロフィールを選んでご覧いただけます。">
+  <style>
+    :root {
+      --background: #2a1a12;
+      --panel: #f0f0f0;
+      --card: #ffffff;
+      --text: #333333;
+      --heading: #2c3e50;
+      --muted: #666666;
+      --line: #e0e0e0;
+      --accent: #f6d27a;
+      --accent-deep: #8a5a16;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .directory {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: var(--panel);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+);
+    }
+
+    .back-link {
+      width: fit-content;
+      color: var(--heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .profile-intro {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 30px;
+      align-items: center;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background-color: var(--card);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .intro-image {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border: 2px solid #dddddd;
+      border-radius: 8px;
+      background-color: #ffffff;
+      object-fit: contain;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent-deep);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .page-title {
+      margin: 0 0 14px;
+      color: var(--heading);
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      line-height: 1.1;
+    }
+
+    .page-description {
+      max-width: 36em;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .profiles-heading {
+      margin: 0 0 16px;
+      color: var(--heading);
+      font-size: 1.5rem;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .profile-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background-color: var(--card);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .profile-card:hover,
+    .profile-card[aria-pressed="true"] {
+      border-color: var(--accent);
+      background-color: var(--accent);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .profile-card:focus-visible {
+      outline: 3px solid var(--accent-deep);
+      outline-offset: 3px;
+    }
+
+    .portrait {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(145deg, rgba(246, 210, 122, 0.18), rgba(255, 255, 255, 0.8)),
+        #f7f7f7;
+      color: #777777;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+    }
+
+    .profile-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-height: 116px;
+      padding: 16px;
+    }
+
+    .profile-number {
+      color: var(--accent-deep);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .profile-name {
+      color: var(--heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .profile-status {
+      margin-top: auto;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .selection {
+      min-height: 1.7em;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .directory {
+        margin: 20px 12px;
+        padding: 20px;
+      }
+
+      .profile-intro {
+        grid-template-columns: 140px 1fr;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .profile-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .profile-intro {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-image {
+        width: min(180px, 100%);
+      }
+
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .profile-card {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="directory">
+    <a class="back-link" href="../">← ぬいぐるみ</a>
+
+    <section class="profile-intro" aria-labelledby="pageTitle">
+      <img class="intro-image" src="../灯台さん1.png" alt="灯台さん">
+      <div>
+        <p class="eyebrow">TOUDAI-SAN PROFILES</p>
+        <h1 class="page-title" id="pageTitle">灯台さん</h1>
+        <p class="page-description">歩く灯台？それとも灯台の妖精？不思議な存在。作者との付き合いは高校生の頃から。</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="profilesHeading">
+      <h2 class="profiles-heading" id="profilesHeading">灯台さんを選ぶ</h2>
+
+      <div class="profile-grid">
+        <button class="profile-card" type="button" data-profile="灯台さん（概念）" aria-pressed="false">
+          <span class="portrait" aria-hidden="true">画像準備中</span>
+          <span class="profile-copy">
+            <span class="profile-number">PROFILE 01</span>
+            <span class="profile-name">灯台さん（概念）</span>
+            <span class="profile-status">プロフィール準備中</span>
+          </span>
+        </button>
+
+        <button class="profile-card" type="button" data-profile="石狩灯台さん" aria-pressed="false">
+          <span class="portrait" aria-hidden="true">画像準備中</span>
+          <span class="profile-copy">
+            <span class="profile-number">PROFILE 02</span>
+            <span class="profile-name">石狩灯台さん</span>
+            <span class="profile-status">プロフィール準備中</span>
+          </span>
+        </button>
+
+        <button class="profile-card" type="button" data-profile="バーンハム灯台さん" aria-pressed="false">
+          <span class="portrait" aria-hidden="true">画像準備中</span>
+          <span class="profile-copy">
+            <span class="profile-number">PROFILE 03</span>
+            <span class="profile-name">バーンハム灯台さん</span>
+            <span class="profile-status">プロフィール準備中</span>
+          </span>
+        </button>
+
+        <button class="profile-card" type="button" data-profile="アメデ灯台さん" aria-pressed="false">
+          <span class="portrait" aria-hidden="true">画像準備中</span>
+          <span class="profile-copy">
+            <span class="profile-number">PROFILE 04</span>
+            <span class="profile-name">アメデ灯台さん</span>
+            <span class="profile-status">プロフィール準備中</span>
+          </span>
+        </button>
+
+        <button class="profile-card" type="button" data-profile="ブラッドリーヘッド灯台さん" aria-pressed="false">
+          <span class="portrait" aria-hidden="true">画像準備中</span>
+          <span class="profile-copy">
+            <span class="profile-number">PROFILE 05</span>
+            <span class="profile-name">ブラッドリーヘッド灯台さん</span>
+            <span class="profile-status">プロフィール準備中</span>
+          </span>
+        </button>
+
+        <button class="profile-card" type="button" data-profile="荒久灯台さん" aria-pressed="false">
+          <span class="portrait" aria-hidden="true">画像準備中</span>
+          <span class="profile-copy">
+            <span class="profile-number">PROFILE 06</span>
+            <span class="profile-name">荒久灯台さん</span>
+            <span class="profile-status">プロフィール準備中</span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <p class="selection" id="selectionMessage" aria-live="polite">プロフィールを選んでください。</p>
+  </main>
+
+  <script>
+    const profileCards = Array.from(document.querySelectorAll('.profile-card'));
+    const selectionMessage = document.getElementById('selectionMessage');
+
+    profileCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        profileCards.forEach(function (otherCard) {
+          otherCard.setAttribute('aria-pressed', 'false');
+        });
+
+        card.setAttribute('aria-pressed', 'true');
+        selectionMessage.textContent = '「' + card.dataset.profile + '」を選択中';
+      });
+    });
+  </script>
+</body>
+
+</html>
