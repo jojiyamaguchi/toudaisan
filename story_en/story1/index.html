@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ja-path="/story/story1/" data-en-path="/story_en/story1/">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/images/toudaisan_concept1.png">
   <title>Mr. Lighthouse and the Amber Sky</title>
+  <meta name="description" content="The story of Mr. Lighthouse and the amber sky.">
+  <link rel="canonical" href="https://www.toudaisan.com/story_en/story1/">
+  <link rel="alternate" hreflang="ja" href="https://www.toudaisan.com/story/story1/">
+  <link rel="alternate" hreflang="en" href="https://www.toudaisan.com/story_en/story1/">
+  <link rel="alternate" hreflang="x-default" href="https://www.toudaisan.com/story/story1/">
+  <script src="/language.js"></script>
   <style>
     body {
       font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
@@ -21,6 +27,47 @@
       padding: 20px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       background-color: #fff;
+    }
+
+    .story-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 20px 0;
+    }
+
+    .story-back-link,
+    .language-link {
+      color: #555;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .language-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .language-link {
+      padding: 6px 11px;
+      border: 1px solid #d2d2d2;
+      border-radius: 999px;
+    }
+
+    .story-back-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .language-link:hover,
+    .language-link[aria-current="page"] {
+      border-color: #d0a842;
+      background-color: #f6d27a;
+      color: #2c3e50;
     }
 
     .storybook-section {
@@ -63,6 +110,13 @@
 </head>
 <body>
   <div class="storybook-container">
+    <div class="story-toolbar">
+      <a class="story-back-link" href="/story_en/">← Stories</a>
+      <nav class="language-switcher" aria-label="Language selection">
+        <a class="language-link" href="/story/story1/?lang=jp" data-set-language="ja" lang="ja">日本語</a>
+        <a class="language-link" href="/story_en/story1/?lang=en" data-set-language="en" lang="en" aria-current="page">English</a>
+      </nav>
+    </div>
     <div class="storybook-section">
       <div class="text-content">
         <h1>Mr. Lighthouse and the Amber Sky</h1>

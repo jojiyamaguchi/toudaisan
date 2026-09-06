@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="icon" type="image/png" href="/images/toudaisan_concept1.png">
+  <link rel="canonical" href="https://www.toudaisan.com/">
   <title id="pageTitle">灯台さん.com</title>
   <meta name="description" id="pageDescription" content="物語とぬいぐるみ。琥珀の空と海のあいだに、灯台が立つ。" />
   <style>
@@ -138,6 +139,20 @@
       flex-wrap:wrap;
       justify-content:flex-end;
       align-items:center;
+    }
+
+    .language-switcher{
+      margin-left:auto;
+      flex-wrap:nowrap;
+    }
+
+    .language-switcher .pill{
+      padding:8px 12px;
+    }
+
+    .language-switcher .pill[aria-current="page"]{
+      background:rgba(246,210,122,.20);
+      border-color:rgba(246,210,122,.55);
     }
 
     a.pill{
@@ -338,8 +353,10 @@
 
     /* レスポンシブ微調整 */
     @media (max-width:520px){
+      .card{ align-items:flex-start; flex-direction:column; }
       .brand{ min-width: 0; }
       .brand .name{ font-size:18px; }
+      .language-switcher{ margin-left:0; }
       a.pill{ padding: 9px 12px; font-size: 13px; }
     }
   </style>
@@ -375,6 +392,10 @@
             <a class="pill" href="plush" id="plushLink"><span class="dot"></span><span data-lang-text="plushLink">ぬいぐるみ</span></a>
           </nav>
         </div>
+      <nav class="language-switcher" aria-label="Language selection">
+        <a class="pill" id="jaLanguageLink" href="/?lang=jp" lang="ja">日本語</a>
+        <a class="pill" id="enLanguageLink" href="/?lang=en" lang="en">English</a>
+      </nav>
     </div>
   </div>
   <!--
@@ -793,8 +814,8 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-        const userLang = navigator.language || navigator.userLanguage; // ユーザーの言語設定を取得
-        const langKey = userLang.startsWith("ja") ? "ja" : "en"; // 日本語か英語か判定
+        const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+        const langKey = requestedLanguage && requestedLanguage.toLowerCase() === "en" ? "en" : "ja";
 
         // HTMLのlang属性を設定
         document.documentElement.lang = langKey;
@@ -819,12 +840,15 @@
 
         // 言語に基づいてリンクのhref属性を切り替える
         if (langKey === "en") {
-            storyLinkElement.href = "story_en";
-            plushLinkElement.href = "plush";
+            storyLinkElement.href = "/story_en/?lang=en";
+            plushLinkElement.href = "/plush_en/?lang=en";
         } else {
-            storyLinkElement.href = "story"; // 日本語の場合のデフォルト
-            plushLinkElement.href = "plush"; // 日本語の場合のデフォルト
+            storyLinkElement.href = "/story/?lang=jp";
+            plushLinkElement.href = "/plush/?lang=jp";
         }
+
+        document.getElementById("jaLanguageLink").setAttribute("aria-current", langKey === "ja" ? "page" : "false");
+        document.getElementById("enLanguageLink").setAttribute("aria-current", langKey === "en" ? "page" : "false");
 
         // フッターノート (コメントアウトされているが、もし有効にするなら)
         // const footerNote = document.getElementById("footerNote");
