@@ -20,11 +20,11 @@
     requestedLanguage = null;
   }
 
-  function addNavigationContext(path) {
+  function addNavigationContext(path, parameterNames) {
     var destinationUrl = new URL(path, window.location.origin);
     var currentParameters = new URLSearchParams(window.location.search);
 
-    ['nfc', 'type', 'bonus', 'lang'].forEach(function (name) {
+    parameterNames.forEach(function (name) {
       if (currentParameters.has(name) && !destinationUrl.searchParams.has(name)) {
         destinationUrl.searchParams.set(name, currentParameters.get(name));
       }
@@ -38,13 +38,19 @@
 
   if (isRouter) {
     var routerLanguage = requestedLanguage || 'ja';
-    var routerDestination = addNavigationContext(routerLanguage === 'en' ? englishPath : japanesePath);
+    var routerDestination = addNavigationContext(
+      routerLanguage === 'en' ? englishPath : japanesePath,
+      ['lang']
+    );
     window.location.replace(routerDestination);
     return;
   }
 
   if (requestedLanguage && pageLanguage !== requestedLanguage) {
-    var requestedDestination = addNavigationContext(requestedLanguage === 'en' ? englishPath : japanesePath);
+    var requestedDestination = addNavigationContext(
+      requestedLanguage === 'en' ? englishPath : japanesePath,
+      ['nfc', 'type', 'bonus', 'lang']
+    );
     window.location.replace(requestedDestination);
   }
 })();

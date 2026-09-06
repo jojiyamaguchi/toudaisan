@@ -28,14 +28,17 @@
         : 'concept';
       var route = routes[selectedType];
       var bonusIndex = Math.floor(Math.random() * route.bonusCount);
-      var navigationParameters = new URLSearchParams({
-        nfc: '1',
-        type: selectedType,
-        bonus: String(bonusIndex)
-      });
+      try {
+        window.sessionStorage.setItem('toudaisan-plush-bonus', JSON.stringify({
+          type: selectedType,
+          bonus: bonusIndex
+        }));
+      } catch (error) {
+        // The profile page still opens normally when temporary storage is unavailable.
+      }
 
-      document.documentElement.dataset.jaPath = route.ja + '?' + navigationParameters.toString();
-      document.documentElement.dataset.enPath = route.en + '?' + navigationParameters.toString();
+      document.documentElement.dataset.jaPath = route.ja;
+      document.documentElement.dataset.enPath = route.en;
     })();
   </script>
   <script src="/language.js"></script>
@@ -101,10 +104,20 @@
     <h1>ぬいぐるみのページを開いています</h1>
     <p>自動的に移動しない場合は、言語を選んでください。<br>Please select a language if you are not redirected.</p>
     <nav aria-label="Language selection">
-      <a href="/plush/toudaisan/concept/?nfc=1&type=concept&lang=jp" data-set-language="ja" lang="ja">日本語</a>
-      <a href="/plush_en/toudaisan/concept/?nfc=1&type=concept&lang=en" data-set-language="en" lang="en">English</a>
+      <a href="/plush/toudaisan/concept/" data-nfc-language="ja" lang="ja">日本語</a>
+      <a href="/plush_en/toudaisan/concept/" data-nfc-language="en" lang="en">English</a>
     </nav>
   </main>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var japaneseLink = document.querySelector('[data-nfc-language="ja"]');
+      var englishLink = document.querySelector('[data-nfc-language="en"]');
+
+      japaneseLink.href = root.dataset.jaPath;
+      englishLink.href = root.dataset.enPath;
+    })();
+  </script>
   <script src="/site-footer.js"></script>
 </body>
 

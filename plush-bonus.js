@@ -46,14 +46,41 @@
     }
   };
 
+  var STORAGE_KEY = 'toudaisan-plush-bonus';
   var parameters = new URLSearchParams(window.location.search);
-  if (parameters.get('nfc') !== '1') {
+  var storedBonus = null;
+
+  try {
+    storedBonus = JSON.parse(window.sessionStorage.getItem(STORAGE_KEY));
+  } catch (error) {
+    storedBonus = null;
+  }
+
+  if (parameters.get('nfc') === '1') {
+    storedBonus = {
+      type: (parameters.get('type') || 'concept').toLowerCase(),
+      bonus: Number(parameters.get('bonus'))
+    };
+
+    try {
+      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(storedBonus));
+    } catch (error) {
+      // The bonus can still be displayed for this page view.
+    }
+  }
+
+  if (!storedBonus || typeof storedBonus.type !== 'string') {
     return;
   }
 
   var containers = document.querySelectorAll('[data-plush-bonus]');
   containers.forEach(function (container) {
     var type = container.getAttribute('data-plush-bonus');
+
+    if (storedBonus.type !== type) {
+      return;
+    }
+
     var language = (document.documentElement.lang || 'ja').toLowerCase().split('-')[0];
     var localizedBonuses = bonuses[type] && bonuses[type][language];
 
@@ -61,21 +88,33 @@
       return;
     }
 
-    var bonusIndex = Number(parameters.get('bonus'));
+    var bonusIndex = Number(storedBonus.bonus);
     if (!Number.isInteger(bonusIndex) || bonusIndex < 0 || bonusIndex >= localizedBonuses.length) {
       bonusIndex = Math.floor(Math.random() * localizedBonuses.length);
+      storedBonus.bonus = bonusIndex;
+
+      try {
+        window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(storedBonus));
+      } catch (error) {
+        // The selected bonus still remains visible for this page view.
+      }
     }
 
     var text = container.querySelector('[data-plush-bonus-text]');
     text.textContent = localizedBonuses[bonusIndex];
     container.hidden = false;
-
-    document.querySelectorAll('[data-set-language]').forEach(function (link) {
-      var linkUrl = new URL(link.href, window.location.origin);
-      linkUrl.searchParams.set('nfc', '1');
-      linkUrl.searchParams.set('type', type);
-      linkUrl.searchParams.set('bonus', String(bonusIndex));
-      link.href = linkUrl.pathname + linkUrl.search + linkUrl.hash;
-    });
   });
+
+  if (parameters.has('nfc') || parameters.has('type') || parameters.has('bonus')) {
+    ['nfc', 'type', 'bonus', 'lang'].forEach(function (name) {
+      parameters.delete(name);
+    });
+
+    var cleanQuery = parameters.toString();
+    var cleanUrl = window.location.pathname
+      + (cleanQuery ? '?' + cleanQuery : '')
+      + window.location.hash;
+
+    window.history.replaceState(null, '', cleanUrl);
+  }
 })();
