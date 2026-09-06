@@ -36,6 +36,7 @@
       background: transparent;
       color: #333;
       font: inherit;
+      text-decoration: none;
       text-align: left;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -130,13 +131,13 @@
 
 <body>
   <main class="plush-selection-page" aria-label="ぬいぐるみのカテゴリー">
-    <button class="category-card" type="button" data-category="灯台さん" aria-pressed="false">
+    <a class="category-card" href="toudaisan">
       <img class="category-image" src="灯台さん1.png" alt="灯台さん">
       <span class="category-details">
         <span class="category-title">灯台さん</span>
         <span class="category-excerpt">歩く灯台？それとも灯台の妖精？不思議な存在。作者との付き合いは高校生の頃から。</span>
       </span>
-    </button>
+    </a>
 
     <button class="category-card" type="button" data-category="ニュコ" aria-pressed="false">
       <span class="category-image" aria-hidden="true">画像準備中</span>
@@ -180,7 +181,7 @@
   </main>
 
   <script>
-    const categoryCards = Array.from(document.querySelectorAll('.category-card'));
+    const categoryCards = Array.from(document.querySelectorAll('.category-card[type="button"]'));
 
     categoryCards.forEach(function (card) {
       card.addEventListener('click', function () {
