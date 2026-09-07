@@ -13,6 +13,12 @@
   <link rel="alternate" hreflang="x-default" href="https://www.toudaisan.com/plush/">
   <script src="/language.js"></script>
   <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -81,6 +87,7 @@
 
     .category-details {
       flex-grow: 1;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -98,6 +105,7 @@
       color: #666;
       font-size: 1em;
       line-height: 1.6;
+      overflow-wrap: anywhere;
     }
 
 
