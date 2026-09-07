@@ -140,19 +140,13 @@
       position: absolute;
       inset: 0;
       opacity: 0;
-      clip-path: inset(0 0 0 50%);
       transform: translateZ(-2px);
       transition: opacity 220ms ease 120ms;
     }
 
-    .intro.is-opening .spread {
-      opacity: 1;
-      animation: spread-reveal 2.5s cubic-bezier(0.45, 0.04, 0.16, 1) forwards;
-    }
-
+    .intro.is-opening .spread,
     .intro.is-open .spread {
       opacity: 1;
-      clip-path: inset(0);
     }
 
     .page {
@@ -163,13 +157,6 @@
       overflow: hidden;
       background: #c9a875;
       box-shadow: 0 24px 70px var(--paper-shadow);
-    }
-
-    .page--left {
-      left: 0;
-      border-radius: 10px 1px 1px 10px;
-      transform-origin: right center;
-      transform: rotateY(1.5deg);
     }
 
     .page--right {
@@ -187,15 +174,12 @@
       content: '';
     }
 
-    .page--left::after {
-      background: linear-gradient(to left, rgba(57, 30, 14, 0.2), transparent 9%);
-    }
-
     .page--right::after {
       background: linear-gradient(to right, rgba(57, 30, 14, 0.2), transparent 9%);
     }
 
-    .page img {
+    .page img,
+    .cover__back img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -242,6 +226,11 @@
       overflow: hidden;
       border-radius: inherit;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .cover__front {
+      transform: translateZ(1px);
     }
 
     .cover__front img {
@@ -254,11 +243,23 @@
     }
 
     .cover__back {
-      transform: rotateY(180deg);
+      border-radius: 10px 0 0 10px;
+      transform: rotateY(180deg) translateZ(1px);
       background:
         linear-gradient(90deg, rgba(49, 24, 12, 0.28), transparent 10%),
         #b99461;
-      box-shadow: inset 0 0 38px rgba(48, 25, 13, 0.32);
+      box-shadow:
+        inset 0 0 38px rgba(48, 25, 13, 0.32),
+        0 24px 70px var(--paper-shadow);
+    }
+
+    .cover__back::after {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background: linear-gradient(to left, rgba(57, 30, 14, 0.2), transparent 9%);
+      content: '';
     }
 
     .intro.is-opening .cover {
@@ -266,9 +267,9 @@
     }
 
     .intro.is-open .cover {
-      opacity: 0;
       transform: rotateY(-180deg);
       pointer-events: none;
+      box-shadow: -10px 20px 50px rgba(0, 0, 0, 0.32);
     }
 
     .spine {
@@ -276,7 +277,7 @@
       top: 1%;
       bottom: 1%;
       left: 50%;
-      z-index: 5;
+      z-index: 9;
       width: 3px;
       transform: translateX(-50%);
       background: linear-gradient(to right, rgba(33, 15, 7, 0.45), rgba(255, 221, 160, 0.18), rgba(33, 15, 7, 0.45));
@@ -347,15 +348,6 @@
       }
     }
 
-    @keyframes spread-reveal {
-      from {
-        clip-path: inset(0 0 0 50%);
-      }
-      to {
-        clip-path: inset(0);
-      }
-    }
-
     @keyframes ambient-drift {
       from {
         transform: translate3d(-1%, -1%, 0) rotate(-1deg);
@@ -370,10 +362,6 @@
         width: min(98vw, calc(82dvh * 4 / 3));
       }
 
-      .page--left {
-        border-radius: 5px 0 0 5px;
-      }
-
       .page--right {
         border-radius: 0 5px 5px 0;
       }
@@ -381,14 +369,17 @@
       .cover {
         border-radius: 5px;
       }
+
+      .cover__back {
+        border-radius: 5px 0 0 5px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .intro::before,
       .intro.is-approaching .book,
       .intro.is-opening .book,
-      .intro.is-opening .cover,
-      .intro.is-opening .spread {
+      .intro.is-opening .cover {
         animation: none;
       }
 
@@ -403,22 +394,21 @@
   <main class="intro" id="nfc-intro" aria-label="魔法のスケッチブックのアニメーション。画面に触れるとスキップします。">
     <div class="book" aria-hidden="true">
       <div class="spread">
-        <div class="page page--left">
-          <img class="page__motion" src="/MagicSketchbookPageL.gif" alt="">
-          <img class="page__still" src="/MagicSketchbookPageL.png" alt="">
-        </div>
         <div class="page page--right">
           <img class="page__motion" src="/MagicSketchbookPageR.gif" alt="">
           <img class="page__still" src="/MagicSketchbookPageR.png" alt="">
         </div>
-        <div class="spine"></div>
       </div>
+      <div class="spine"></div>
 
       <div class="cover">
         <div class="cover__face cover__front">
           <img src="/MagicSketchbookCover.png" alt="">
         </div>
-        <div class="cover__face cover__back"></div>
+        <div class="cover__face cover__back">
+          <img class="page__motion" src="/MagicSketchbookPageL.gif" alt="">
+          <img class="page__still" src="/MagicSketchbookPageL.png" alt="">
+        </div>
       </div>
     </div>
 
