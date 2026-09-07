@@ -109,10 +109,6 @@
     '  will-change: transform;',
     '  -webkit-tap-highlight-color: transparent;',
     '}',
-    '.magic-sketchbook-cover:focus-visible {',
-    '  outline: 4px solid var(--accent, #f6d27a);',
-    '  outline-offset: 5px;',
-    '}',
     '.magic-sketchbook-cover-face {',
     '  position: absolute;',
     '  inset: 0;',
@@ -131,6 +127,26 @@
     '}',
     '.magic-sketchbook-invitation.is-opening .magic-sketchbook-cover {',
     '  animation: magic-sketchbook-open 1.8s cubic-bezier(0.45, 0.04, 0.16, 1) forwards;',
+    '}',
+    '.magic-sketchbook-hitarea {',
+    '  position: absolute;',
+    '  top: 0;',
+    '  left: 25%;',
+    '  z-index: 10;',
+    '  display: block;',
+    '  width: 50%;',
+    '  height: 100%;',
+    '  border-radius: 7px;',
+    '  cursor: pointer;',
+    '  touch-action: manipulation;',
+    '  -webkit-tap-highlight-color: transparent;',
+    '}',
+    '.magic-sketchbook-hitarea:focus-visible {',
+    '  outline: 4px solid var(--accent, #f6d27a);',
+    '  outline-offset: 5px;',
+    '}',
+    '.magic-sketchbook-invitation.is-opening .magic-sketchbook-hitarea {',
+    '  pointer-events: none;',
     '}',
     '.magic-sketchbook-spine {',
     '  position: absolute;',
@@ -182,20 +198,22 @@
     '      <img src="/MagicSketchbookPageR.png" alt="">',
     '    </div>',
     '    <div class="magic-sketchbook-spine" aria-hidden="true"></div>',
-    '    <button class="magic-sketchbook-cover" type="button" aria-label="' + buttonLabel + '" aria-expanded="false">',
+    '    <div class="magic-sketchbook-cover" aria-hidden="true">',
     '      <span class="magic-sketchbook-cover-face magic-sketchbook-cover-front">',
     '        <img src="/MagicSketchbookCover.png" alt="">',
     '      </span>',
     '      <span class="magic-sketchbook-cover-face magic-sketchbook-cover-back" aria-hidden="true">',
     '        <img src="/MagicSketchbookPageL.png" alt="">',
     '      </span>',
-    '    </button>',
+    '    </div>',
     '  </div>',
+    '  <a class="magic-sketchbook-hitarea" href="/" aria-label="' + buttonLabel + '"></a>',
     '</div>',
   ].join('');
   profile.appendChild(invitation);
 
   var cover = invitation.querySelector('.magic-sketchbook-cover');
+  var hitarea = invitation.querySelector('.magic-sketchbook-hitarea');
   var hasOpened = false;
   var hasNavigated = false;
   var fallbackTimer;
@@ -210,14 +228,17 @@
     window.location.assign('/');
   }
 
-  cover.addEventListener('click', function () {
+  function openSketchbook(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
     if (hasOpened) {
       return;
     }
 
     hasOpened = true;
-    cover.disabled = true;
-    cover.setAttribute('aria-expanded', 'true');
+    hitarea.setAttribute('aria-disabled', 'true');
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       goHome();
@@ -231,5 +252,8 @@
       }
     }, { once: true });
     fallbackTimer = window.setTimeout(goHome, 2200);
-  });
+  }
+
+  hitarea.addEventListener('click', openSketchbook);
+  hitarea.addEventListener('touchend', openSketchbook, { passive: false });
 })();
