@@ -9,8 +9,8 @@
 
   var isEnglish = (document.documentElement.lang || 'ja').toLowerCase().split('-')[0] === 'en';
   var title = isEnglish
-    ? 'Open the Magic Sketchbook'
-    : '魔法のスケッチブックを開いてみよう';
+    ? 'Open the Magic Sketchbook (Go to the Home Page)'
+    : '魔法のスケッチブックを開いてみよう(Topページに移動します)';
   var buttonLabel = isEnglish
     ? 'Open the Magic Sketchbook and go to the home page'
     : '魔法のスケッチブックを開いてトップページへ移動する';
