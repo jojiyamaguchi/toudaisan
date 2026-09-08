@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/png" href="/images/toudaisan_concept1.png">
+  <link rel="canonical" href="https://www.toudaisan.com/staircase/">
+  <title id="pageTitle">灯台さんと魔法の本｜階段</title>
+  <meta name="description" id="pageDescription" content="灯台の中の階段を上りながら、灯台さんたちに出会うページです。">
+  <style>
+    :root{
+      --ink:#2b211b;
+      --ink-soft:#5f5146;
+      --paper:#d7c5a4;
+      --paper-light:#eadcbe;
+      --stone:#9d8e78;
+      --stone-dark:#62594f;
+      --metal:#3f3933;
+      --gold:#d9aa4e;
+      --shadow:rgba(25,18,13,.34);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-width:0;
+      color:var(--ink);
+      font-family:ui-serif,"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",Georgia,serif;
+      background:
+        linear-gradient(90deg,rgba(38,31,26,.36),transparent 9%,transparent 91%,rgba(38,31,26,.36)),
+        repeating-linear-gradient(0deg,transparent 0 148px,rgba(70,60,51,.14) 149px 151px),
+        repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 49.7%,rgba(70,60,51,.12) 50% 50.4%,rgba(255,255,255,.02) 50.7% 100%),
+        radial-gradient(circle at 50% 14%,var(--paper-light),var(--paper) 56%,var(--stone));
+      background-size:auto,auto 300px,260px 300px,auto;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 22%,rgba(91,74,58,.11),transparent 12%),
+        radial-gradient(circle at 84% 68%,rgba(91,74,58,.13),transparent 14%);
+      opacity:.8;
+    }
+    .topbar{
+      position:fixed;
+      z-index:20;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(940px,calc(100% - 24px));
+      min-height:66px;
+      padding:11px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      background:rgba(42,31,24,.90);
+      color:#f4ead7;
+      border:1px solid rgba(255,255,255,.13);
+      border-top:0;
+      border-radius:0 0 18px 18px;
+      box-shadow:0 12px 32px rgba(31,22,17,.24);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+    .topbar__title{
+      min-width:0;
+      font-size:clamp(15px,2.4vw,20px);
+      font-weight:700;
+      letter-spacing:.05em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .topbar__actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+    .pill{
+      color:#f4ead7;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:999px;
+      padding:8px 11px;
+      font-size:14px;
+      line-height:1;
+      background:rgba(255,255,255,.06);
+    }
+    .pill[aria-current="page"]{
+      color:#2b211b;
+      background:#efd188;
+      border-color:#efd188;
+    }
+    .home{
+      width:34px;
+      height:34px;
+      display:grid;
+      place-items:center;
+      font-size:21px;
+      padding:0;
+    }
+    main{
+      width:min(960px,100%);
+      margin:0 auto;
+      padding:110px clamp(12px,4vw,42px) 130px;
+    }
+    .stairwell{
+      position:relative;
+      min-height:1850px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      isolation:isolate;
+    }
+    .stairwell::before{
+      content:"";
+      position:absolute;
+      z-index:-2;
+      top:2%;
+      bottom:2%;
+      left:50%;
+      width:8px;
+      transform:translateX(-50%);
+      border-radius:8px;
+      background:linear-gradient(90deg,#4c443c,#887968 46%,#423b35);
+      box-shadow:0 0 0 1px rgba(41,34,28,.5),8px 0 20px rgba(41,34,28,.15);
+    }
+    .character{
+      position:relative;
+      width:min(48%,390px);
+      min-height:390px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-end;
+      text-decoration:none;
+      color:inherit;
+      outline-offset:8px;
+    }
+    .character--left{align-self:flex-start}
+    .character--right{align-self:flex-end}
+    .portrait-wrap{
+      position:relative;
+      z-index:3;
+      width:min(86%,290px);
+      aspect-ratio:4/5;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      transition:transform .25s ease;
+    }
+    .character:hover .portrait-wrap,
+    .character:focus-visible .portrait-wrap{transform:translateY(-7px)}
+    .portrait{
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      object-position:center bottom;
+      mix-blend-mode:multiply;
+      filter:drop-shadow(0 14px 12px rgba(42,31,24,.24));
+    }
+    .nameplate{
+      position:relative;
+      z-index:5;
+      max-width:94%;
+      margin-top:-3px;
+      padding:9px 15px;
+      text-align:center;
+      font-size:clamp(16px,2.6vw,22px);
+      font-weight:700;
+      letter-spacing:.04em;
+      background:rgba(235,220,190,.92);
+      border:1px solid rgba(70,57,46,.38);
+      border-radius:10px;
+      box-shadow:0 8px 18px rgba(43,33,27,.14);
+    }
+    .landing{
+      position:relative;
+      z-index:2;
+      width:112%;
+      height:18px;
+      margin-top:8px;
+      border:1px solid #332f2b;
+      background:linear-gradient(#7a7065,#4d4741);
+      box-shadow:0 10px 12px rgba(33,27,22,.25);
+    }
+    .character--left .landing{transform-origin:left center}
+    .character--right .landing{transform-origin:right center}
+    .stairs{
+      position:absolute;
+      z-index:1;
+      width:48%;
+      height:210px;
+      pointer-events:none;
+      filter:drop-shadow(0 8px 7px rgba(37,30,25,.24));
+    }
+    .stairs::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(to bottom,
+          transparent 0 23px,
+          var(--metal) 24px 26px);
+      clip-path:polygon(0 100%,100% 0,100% 13%,0 100%);
+    }
+    .stairs::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-bottom:5px solid var(--metal);
+      transform:skewY(-23deg);
+      transform-origin:left bottom;
+    }
+    .stairs--lower{
+      right:7%;
+      bottom:395px;
+    }
+    .stairs--upper{
+      left:7%;
+      top:395px;
+      transform:scaleX(-1);
+    }
+    .direction{
+      position:absolute;
+      left:50%;
+      bottom:17px;
+      transform:translateX(-50%);
+      font-size:30px;
+      color:rgba(54,45,38,.52);
+      animation:rise 1.8s ease-in-out infinite;
+    }
+    @keyframes rise{
+      0%,100%{transform:translate(-50%,5px)}
+      50%{transform:translate(-50%,-5px)}
+    }
+    @media (max-width:620px){
+      main{padding-inline:8px}
+      .stairwell{min-height:1500px}
+      .character{width:54%;min-height:315px}
+      .portrait-wrap{width:94%}
+      .landing{width:110%;height:14px}
+      .stairs{width:44%;height:175px}
+      .stairs--lower{right:8%;bottom:320px}
+      .stairs--upper{left:8%;top:320px}
+      .topbar__title{max-width:42vw}
+      .pill{font-size:13px;padding:8px 9px}
+    }
+    @media (max-width:390px){
+      .topbar{gap:8px}
+      .topbar__actions{gap:5px}
+      .character{width:56%}
+      .nameplate{font-size:15px;padding:8px 9px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .direction{animation:none}
+      .portrait-wrap{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__title" id="worldTitle">灯台さんと魔法の本</div>
+    <div class="topbar__actions">
+      <a class="pill home" id="homeLink" href="/?lang=jp" aria-label="トップページ">⌂</a>
+      <a class="pill" id="jaLink" href="/staircase/?lang=jp" lang="ja">日本語</a>
+      <a class="pill" id="enLink" href="/staircase/?lang=en" lang="en">English</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="stairwell" aria-label="キャラクターの階段">
+      <a class="character character--left" id="babyLink" href="/plush/lighthousebaby/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/lighthousebaby1.png" alt="灯台の赤ちゃん">
+        </div>
+        <div class="nameplate" data-name="baby">灯台の赤ちゃん</div>
+        <div class="landing" aria-hidden="true"></div>
+      </a>
+
+      <div class="stairs stairs--upper" aria-hidden="true"></div>
+
+      <a class="character character--right" id="conceptLink" href="/plush/toudaisan/concept/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/toudaisan_concept1.png" alt="灯台さん（概念）">
+        </div>
+        <div class="nameplate" data-name="concept">灯台さん（概念）</div>
+        <div class="landing" aria-hidden="true"></div>
+      </a>
+
+      <div class="stairs stairs--lower" aria-hidden="true"></div>
+
+      <a class="character character--left" id="bradleyLink" href="/plush/toudaisan/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/toudaisan_bradleyshead1.png" alt="ブラッドリーヘッド灯台さん">
+        </div>
+        <div class="nameplate" data-name="bradley">ブラッドリーヘッド灯台さん</div>
+        <div class="landing" aria-hidden="true"></div>
+      </a>
+
+      <div class="direction" aria-hidden="true">↑</div>
+    </div>
+  </main>
+
+  <script>
+    const copy = {
+      ja:{
+        title:"灯台さんと魔法の本｜階段",
+        description:"灯台の中の階段を上りながら、灯台さんたちに出会うページです。",
+        world:"灯台さんと魔法の本",
+        home:"トップページ",
+        aria:"キャラクターの階段",
+        bradley:"ブラッドリーヘッド灯台さん",
+        concept:"灯台さん（概念）",
+        baby:"灯台の赤ちゃん"
+      },
+      en:{
+        title:"Mr Lighthouse and the Magic Sketchbook | Staircase",
+        description:"Climb the staircase inside the lighthouse and meet its characters.",
+        world:"Mr Lighthouse and the Magic Sketchbook",
+        home:"Top page",
+        aria:"Character staircase",
+        bradley:"Bradley’s Head Mr Lighthouse",
+        concept:"Mr Lighthouse (Concept)",
+        baby:"Lighthouse Baby"
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded",()=>{
+      const lang = new URLSearchParams(location.search).get("lang") === "en" ? "en" : "ja";
+      const t = copy[lang];
+      document.documentElement.lang = lang;
+      document.getElementById("pageTitle").textContent = t.title;
+      document.getElementById("pageDescription").content = t.description;
+      document.getElementById("worldTitle").textContent = t.world;
+      document.querySelector(".stairwell").setAttribute("aria-label",t.aria);
+      document.getElementById("homeLink").setAttribute("aria-label",t.home);
+      document.getElementById("homeLink").href = "/?lang=" + (lang === "en" ? "en" : "jp");
+      document.getElementById("jaLink").setAttribute("aria-current",lang === "ja" ? "page" : "false");
+      document.getElementById("enLink").setAttribute("aria-current",lang === "en" ? "page" : "false");
+
+      const routes = lang === "en"
+        ? {
+            baby:"/plush_en/lighthousebaby/?lang=en",
+            concept:"/plush_en/toudaisan/concept/?lang=en",
+            bradley:"/plush_en/toudaisan/?lang=en"
+          }
+        : {
+            baby:"/plush/lighthousebaby/?lang=jp",
+            concept:"/plush/toudaisan/concept/?lang=jp",
+            bradley:"/plush/toudaisan/?lang=jp"
+          };
+
+      ["baby","concept","bradley"].forEach(key=>{
+        const link = document.getElementById(key + "Link");
+        link.href = routes[key];
+        link.querySelector("[data-name]").textContent = t[key];
+        link.querySelector("img").alt = t[key];
+      });
+
+      if (!location.hash) {
+        requestAnimationFrame(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:"instant"}));
+      }
+    });
+  </script>
+  <script src="/site-footer.js"></script>
+</body>
+</html>
