@@ -24,13 +24,13 @@
     body{
       margin:0;
       min-width:0;
-      color:var(--ink);
+      color:#eee4d2;
       font-family:ui-serif,"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",Georgia,serif;
       background:
-        linear-gradient(90deg,rgba(38,31,26,.36),transparent 9%,transparent 91%,rgba(38,31,26,.36)),
-        repeating-linear-gradient(0deg,transparent 0 148px,rgba(70,60,51,.14) 149px 151px),
-        repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 49.7%,rgba(70,60,51,.12) 50% 50.4%,rgba(255,255,255,.02) 50.7% 100%),
-        radial-gradient(circle at 50% 14%,var(--paper-light),var(--paper) 56%,var(--stone));
+        linear-gradient(90deg,rgba(0,0,0,.62),transparent 13%,transparent 87%,rgba(0,0,0,.62)),
+        repeating-linear-gradient(0deg,transparent 0 148px,rgba(151,128,102,.07) 149px 151px),
+        repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 49.7%,rgba(127,105,82,.06) 50% 50.4%,rgba(255,255,255,.008) 50.7% 100%),
+        radial-gradient(circle at 50% 12%,#3a3028,#211b17 54%,#0e0c0a);
       background-size:auto,auto 300px,260px 300px,auto;
       overflow-x:hidden;
     }
@@ -41,9 +41,9 @@
       z-index:-1;
       pointer-events:none;
       background:
-        radial-gradient(circle at 18% 22%,rgba(91,74,58,.11),transparent 12%),
-        radial-gradient(circle at 84% 68%,rgba(91,74,58,.13),transparent 14%);
-      opacity:.8;
+        radial-gradient(circle at 18% 22%,rgba(0,0,0,.18),transparent 13%),
+        radial-gradient(circle at 84% 68%,rgba(0,0,0,.22),transparent 15%),
+        linear-gradient(rgba(7,6,5,.10),rgba(7,6,5,.32));
     }
     .topbar{
       position:fixed;
@@ -124,6 +124,23 @@
       outline-offset:8px;
       z-index:3;
     }
+    .character::before{
+      content:"";
+      position:absolute;
+      bottom:-46px;
+      width:min(58vw,560px);
+      height:190px;
+      z-index:0;
+      pointer-events:none;
+      background:radial-gradient(ellipse at 50% 70%,
+        rgba(246,205,117,.34) 0%,
+        rgba(224,171,82,.17) 34%,
+        rgba(183,124,52,.07) 53%,
+        transparent 74%);
+      filter:blur(10px);
+    }
+    .character--left::before{left:-5vw}
+    .character--right::before{right:-5vw}
     #babyLink{top:0}
     #bradleyLink{top:var(--level-height)}
     #conceptLink{top:calc(var(--level-height) + var(--level-height))}
@@ -166,8 +183,9 @@
       font-size:clamp(16px,2.6vw,22px);
       font-weight:700;
       letter-spacing:.04em;
-      background:rgba(235,220,190,.92);
-      border:1px solid rgba(70,57,46,.38);
+      color:#f0dfba;
+      background:rgba(28,22,18,.88);
+      border:1px solid rgba(225,184,102,.34);
       border-radius:10px;
       box-shadow:0 8px 18px rgba(43,33,27,.14);
     }
@@ -181,7 +199,7 @@
       transform:translateX(-50%);
       flex:0 0 auto;
       border:1px solid #332f2b;
-      background:linear-gradient(#7a7065,#4d4741);
+      background:linear-gradient(#4b443e,#292521);
       box-shadow:0 10px 12px rgba(33,27,22,.25);
     }
     .stairs{
