@@ -374,7 +374,7 @@
     .sea-toudaisan.is-peeking{
       left:calc(50% - clamp(5px, .75vw, 9px));
       opacity:1;
-      transform:rotate(-12deg);
+      transform:rotate(12deg);
     }
 
     .sea-toudaisan.is-traveling{
@@ -481,7 +481,7 @@
     @keyframes toudaisan-enter{
       0%{
         left:calc(50% - clamp(5px, .75vw, 9px));
-        transform:translateY(0) rotate(-12deg);
+        transform:translateY(0) rotate(12deg);
       }
       13%{ transform:translateY(0) rotate(0); }
       27%{ transform:translateY(-7px) rotate(-1deg); }
@@ -517,12 +517,12 @@
 
     @keyframes toudaisan-arm-raise{
       from{ transform:rotate(-5deg); }
-      to{ transform:rotate(-100deg); }
+      to{ transform:rotate(-126deg); }
     }
 
     @keyframes toudaisan-arm-wave{
-      from{ transform:rotate(-100deg); }
-      to{ transform:rotate(-116deg); }
+      from{ transform:rotate(-118deg); }
+      to{ transform:rotate(-134deg); }
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -533,7 +533,7 @@
 
       .sea-toudaisan.is-arrived #toudaisan-arm-right{
         animation:none;
-        transform:rotate(-100deg);
+        transform:rotate(-126deg);
       }
     }
 
@@ -573,7 +573,7 @@
           <path class="outline" d="M26 149 L33 146 M26 149 L20 144 M26 149 L18 152" />
         </g>
         <g id="toudaisan-arm-right" class="sea-toudaisan__part">
-          <path class="outline" d="M128 103 C143 105 152 113 156 129 C158 137 157 143 158 149" />
+          <path class="outline" d="M128 103 L158 149" />
           <path class="outline" d="M158 149 L151 146 M158 149 L164 144 M158 149 L166 152" />
         </g>
         <g id="toudaisan-body" class="sea-toudaisan__part">
