@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="icon" type="image/png" href="/images/toudaisan_concept1.png">
   <link rel="canonical" href="https://www.toudaisan.com/">
-  <title id="pageTitle">灯台さん.com</title>
-  <meta name="description" id="pageDescription" content="物語とぬいぐるみ。琥珀の空と海のあいだに、灯台が立つ。" />
+  <title id="pageTitle">灯台さんと魔法の本</title>
+  <meta name="description" id="pageDescription" content="灯台さんと魔法の本の世界。" />
   <style>
     :root{
       /* 空：暗めの琥珀 / 海：暗めのブルーグリーン */
@@ -595,8 +595,7 @@
   <div class="ui">
     <div class="card">
         <div class="brand">
-          <div class="name" id="brandName">灯台さん.com</div>
-          <div class="tag" id="brandTag">琥珀の空と海のあいだで、ものがたりとぬいぐるみを。</div>
+          <div class="name" id="brandName">灯台さんと魔法の本</div>
         </div>
       <nav class="language-switcher" aria-label="Language selection">
         <a class="pill" id="jaLanguageLink" href="/?lang=jp" lang="ja">日本語</a>
@@ -1000,19 +999,17 @@
     // 言語設定のための翻訳データ
     const translations = {
       "ja": {
-        "title": "灯台さん.com",
-        "description": "物語とぬいぐるみ。琥珀の空と海のあいだに、灯台が立つ。",
-        "brandName": "灯台さん.com",
-        "brandTag": "琥珀の空と海のあいだで、ものがたりとぬいぐるみを。",
+        "title": "灯台さんと魔法の本",
+        "description": "灯台さんと魔法の本の世界。",
+        "brandName": "灯台さんと魔法の本",
         "storyLink": "物語",
         "plushLink": "ぬいぐるみ",
         // "footerNote": "ここは仮のトップページです。リンク先（#story / #plush）にセクションや別ページを増やしていけます。"
       },
       "en": {
-        "title": "Toudai-san.com",
-        "description": "Stories and plush toys. A lighthouse stands between the amber sky and the sea.",
-        "brandName": "Toudai-san.com",
-        "brandTag": "Stories and plush toys between the amber sky and the sea.",
+        "title": "Mr Lighthouse and the Magic Sketchbook",
+        "description": "The world of Mr Lighthouse and the Magic Sketchbook.",
+        "brandName": "Mr Lighthouse and the Magic Sketchbook",
         "storyLink": "Stories",
         "plushLink": "Plush Toys",
         // "footerNote": "This is a temporary top page. You can add sections or separate pages to the links (#story / #plush)."
@@ -1042,7 +1039,6 @@
 
         // ブランド名とタグ
         document.getElementById("brandName").textContent = currentTranslations.brandName;
-        document.getElementById("brandTag").textContent = currentTranslations.brandTag;
 
         document.getElementById("jaLanguageLink").setAttribute("aria-current", langKey === "ja" ? "page" : "false");
         document.getElementById("enLanguageLink").setAttribute("aria-current", langKey === "en" ? "page" : "false");
