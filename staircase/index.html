@@ -346,7 +346,7 @@
         ? {
             baby:"/plush_en/lighthousebaby/?lang=en",
             concept:"/plush_en/toudaisan/concept/?lang=en",
-            bradley:"/plush_en/toudaisan/?lang=en"
+            bradley:"/plush/toudaisan/?lang=jp"
           }
         : {
             baby:"/plush/lighthousebaby/?lang=jp",
@@ -362,7 +362,7 @@
       });
 
       if (!location.hash) {
-        requestAnimationFrame(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:"instant"}));
+        requestAnimationFrame(()=>window.scrollTo(0,document.documentElement.scrollHeight));
       }
     });
   </script>
