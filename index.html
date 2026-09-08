@@ -351,6 +351,100 @@
         30px 0 25px 10px var(--honey-0); /* 右光 */
     }
 
+    /* 海面に現れる、図形でできた灯台さん */
+    .sea-toudaisan{
+      position:absolute;
+      top:clamp(12px, 5%, 28px);
+      left:clamp(34px, 17vw, 250px);
+      z-index:2;
+      width:clamp(76px, 9vw, 118px);
+      height:auto;
+      overflow:visible;
+      pointer-events:none;
+      filter:drop-shadow(0 12px 14px rgba(0,0,0,.24));
+      animation:toudaisan-float 4.8s ease-in-out infinite;
+    }
+
+    .sea-toudaisan .outline{
+      fill:none;
+      stroke:#171819;
+      stroke-width:5;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      vector-effect:non-scaling-stroke;
+    }
+
+    .sea-toudaisan__body-shape{
+      fill:#aaa9dc;
+      stroke:#171819;
+      stroke-width:5;
+      stroke-linejoin:round;
+      vector-effect:non-scaling-stroke;
+    }
+
+    .sea-toudaisan__window{
+      fill:#ffe68a;
+      stroke:#171819;
+      stroke-width:4;
+      vector-effect:non-scaling-stroke;
+      filter:drop-shadow(0 0 7px rgba(255,218,112,.75));
+    }
+
+    #toudaisan-arm-left{
+      transform-origin:55px 105px;
+      animation:toudaisan-arm-left 3.4s ease-in-out infinite;
+    }
+
+    #toudaisan-arm-right{
+      transform-origin:129px 105px;
+      animation:toudaisan-arm-right 4.1s ease-in-out infinite;
+    }
+
+    #toudaisan-leg-left{
+      transform-origin:77px 188px;
+      animation:toudaisan-leg-left 3.8s ease-in-out infinite;
+    }
+
+    #toudaisan-leg-right{
+      transform-origin:105px 188px;
+      animation:toudaisan-leg-right 4.3s ease-in-out infinite;
+    }
+
+    @keyframes toudaisan-float{
+      0%,100%{ transform:translateY(0) rotate(-.5deg); }
+      50%{ transform:translateY(-7px) rotate(.7deg); }
+    }
+
+    @keyframes toudaisan-arm-left{
+      0%,100%{ transform:rotate(-3deg); }
+      50%{ transform:rotate(7deg); }
+    }
+
+    @keyframes toudaisan-arm-right{
+      0%,100%{ transform:rotate(4deg); }
+      50%{ transform:rotate(-7deg); }
+    }
+
+    @keyframes toudaisan-leg-left{
+      0%,100%{ transform:rotate(2deg); }
+      50%{ transform:rotate(-4deg); }
+    }
+
+    @keyframes toudaisan-leg-right{
+      0%,100%{ transform:rotate(-2deg); }
+      50%{ transform:rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .sea-toudaisan,
+      #toudaisan-arm-left,
+      #toudaisan-arm-right,
+      #toudaisan-leg-left,
+      #toudaisan-leg-right{
+        animation:none;
+      }
+    }
+
     /* レスポンシブ微調整 */
     @media (max-width:520px){
       .card{ align-items:flex-start; flex-direction:column; }
@@ -379,6 +473,29 @@
 
     <div class="sea" id="sea">
       <canvas id="seaFX"></canvas>
+
+      <svg class="sea-toudaisan" id="seaToudaisan" viewBox="0 0 180 240" role="img" aria-label="海面に浮かぶ灯台さん">
+        <g id="toudaisan-leg-left" class="sea-toudaisan__part">
+          <path class="outline" d="M77 187 C78 203 79 217 75 228 C71 232 66 233 60 233" />
+        </g>
+        <g id="toudaisan-leg-right" class="sea-toudaisan__part">
+          <path class="outline" d="M104 187 C105 202 105 217 108 229 C114 231 120 231 126 231" />
+        </g>
+        <g id="toudaisan-arm-left" class="sea-toudaisan__part">
+          <path class="outline" d="M56 103 C48 105 49 126 39 132 C29 138 21 129 20 119" />
+          <path class="outline" d="M20 119 L13 116 M20 119 L15 123 M20 119 L21 111" />
+        </g>
+        <g id="toudaisan-arm-right" class="sea-toudaisan__part">
+          <path class="outline" d="M128 103 C143 105 152 113 156 129 C158 137 157 143 158 149" />
+          <path class="outline" d="M158 149 L151 146 M158 149 L164 144 M158 149 L166 152" />
+        </g>
+        <g id="toudaisan-body" class="sea-toudaisan__part">
+          <path class="sea-toudaisan__body-shape" d="M90 10 L57 57 L57 188 L128 188 L113 61 Z" />
+        </g>
+        <g id="toudaisan-window" class="sea-toudaisan__part">
+          <rect class="sea-toudaisan__window" x="79" y="45" width="21" height="34" rx="2" />
+        </g>
+      </svg>
     </div>
   </div>
 
@@ -849,6 +966,17 @@
 
         document.getElementById("jaLanguageLink").setAttribute("aria-current", langKey === "ja" ? "page" : "false");
         document.getElementById("enLanguageLink").setAttribute("aria-current", langKey === "en" ? "page" : "false");
+
+        // 各パーツを外部のJavaScriptから個別に動かせるよう公開
+        window.toudaisanFigure = {
+          root: document.getElementById("seaToudaisan"),
+          body: document.getElementById("toudaisan-body"),
+          window: document.getElementById("toudaisan-window"),
+          leftArm: document.getElementById("toudaisan-arm-left"),
+          rightArm: document.getElementById("toudaisan-arm-right"),
+          leftLeg: document.getElementById("toudaisan-leg-left"),
+          rightLeg: document.getElementById("toudaisan-leg-right")
+        };
 
         // フッターノート (コメントアウトされているが、もし有効にするなら)
         // const footerNote = document.getElementById("footerNote");
