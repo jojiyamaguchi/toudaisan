@@ -106,50 +106,45 @@
       padding:110px clamp(12px,4vw,42px) 130px;
     }
     .stairwell{
+      --level-height:clamp(390px,70vh,560px);
       position:relative;
-      min-height:1850px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
+      height:calc(var(--level-height) + var(--level-height) + var(--level-height));
       isolation:isolate;
     }
-    .stairwell::before{
-      content:"";
-      position:absolute;
-      z-index:-2;
-      top:2%;
-      bottom:2%;
-      left:50%;
-      width:8px;
-      transform:translateX(-50%);
-      border-radius:8px;
-      background:linear-gradient(90deg,#4c443c,#887968 46%,#423b35);
-      box-shadow:0 0 0 1px rgba(41,34,28,.5),8px 0 20px rgba(41,34,28,.15);
-    }
     .character{
-      position:relative;
-      width:min(48%,390px);
-      min-height:390px;
+      position:absolute;
+      left:0;
+      width:100%;
+      height:var(--level-height);
       display:flex;
       flex-direction:column;
-      align-items:center;
       justify-content:flex-end;
       text-decoration:none;
       color:inherit;
       outline-offset:8px;
+      z-index:3;
     }
-    .character--left{align-self:flex-start}
-    .character--right{align-self:flex-end}
+    #babyLink{top:0}
+    #bradleyLink{top:var(--level-height)}
+    #conceptLink{top:calc(var(--level-height) + var(--level-height))}
+    .character--left{align-items:flex-start}
+    .character--right{align-items:flex-end}
     .portrait-wrap{
       position:relative;
       z-index:3;
-      width:min(86%,290px);
+      width:25vw;
+      min-width:96px;
+      max-width:360px;
       aspect-ratio:4/5;
       display:flex;
       align-items:flex-end;
       justify-content:center;
       transition:transform .25s ease;
     }
+    .character--left .portrait-wrap,
+    .character--left .nameplate{margin-left:clamp(10px,4vw,48px)}
+    .character--right .portrait-wrap,
+    .character--right .nameplate{margin-right:clamp(10px,4vw,48px)}
     .character:hover .portrait-wrap,
     .character:focus-visible .portrait-wrap{transform:translateY(-7px)}
     .portrait{
@@ -164,7 +159,7 @@
     .nameplate{
       position:relative;
       z-index:5;
-      max-width:94%;
+      max-width:min(44vw,390px);
       margin-top:-3px;
       padding:9px 15px;
       text-align:center;
@@ -178,50 +173,42 @@
     }
     .landing{
       position:relative;
-      z-index:2;
-      width:112%;
+      z-index:4;
+      left:50%;
+      width:calc(100vw + 28px);
       height:18px;
       margin-top:8px;
+      transform:translateX(-50%);
+      flex:0 0 auto;
       border:1px solid #332f2b;
       background:linear-gradient(#7a7065,#4d4741);
       box-shadow:0 10px 12px rgba(33,27,22,.25);
     }
-    .character--left .landing{transform-origin:left center}
-    .character--right .landing{transform-origin:right center}
     .stairs{
       position:absolute;
+      left:50%;
       z-index:1;
-      width:48%;
-      height:210px;
+      width:calc(100vw + 28px);
+      height:var(--level-height);
+      overflow:visible;
       pointer-events:none;
       filter:drop-shadow(0 8px 7px rgba(37,30,25,.24));
     }
-    .stairs::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(to bottom,
-          transparent 0 23px,
-          var(--metal) 24px 26px);
-      clip-path:polygon(0 100%,100% 0,100% 13%,0 100%);
-    }
-    .stairs::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-bottom:5px solid var(--metal);
-      transform:skewY(-23deg);
-      transform-origin:left bottom;
-    }
-    .stairs--lower{
-      right:7%;
-      bottom:395px;
+    .stairs path{
+      fill:none;
+      stroke:var(--metal);
+      stroke-width:4;
+      stroke-linecap:square;
+      stroke-linejoin:miter;
+      vector-effect:non-scaling-stroke;
     }
     .stairs--upper{
-      left:7%;
-      top:395px;
-      transform:scaleX(-1);
+      top:var(--level-height);
+      transform:translateX(-50%);
+    }
+    .stairs--lower{
+      top:calc(var(--level-height) + var(--level-height));
+      transform:translateX(-50%) scaleX(-1);
     }
     .direction{
       position:absolute;
@@ -238,20 +225,14 @@
     }
     @media (max-width:620px){
       main{padding-inline:8px}
-      .stairwell{min-height:1500px}
-      .character{width:54%;min-height:315px}
-      .portrait-wrap{width:94%}
-      .landing{width:110%;height:14px}
-      .stairs{width:44%;height:175px}
-      .stairs--lower{right:8%;bottom:320px}
-      .stairs--upper{left:8%;top:320px}
+      .stairwell{--level-height:clamp(360px,66vh,460px)}
+      .landing{height:14px}
       .topbar__title{max-width:42vw}
       .pill{font-size:13px;padding:8px 9px}
     }
     @media (max-width:390px){
       .topbar{gap:8px}
       .topbar__actions{gap:5px}
-      .character{width:56%}
       .nameplate{font-size:15px;padding:8px 9px}
     }
     @media (prefers-reduced-motion:reduce){
@@ -281,7 +262,9 @@
         <div class="landing" aria-hidden="true"></div>
       </a>
 
-      <div class="stairs stairs--upper" aria-hidden="true"></div>
+      <svg class="stairs stairs--upper" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-2 0 H8 V10 H18 V20 H28 V30 H38 V40 H48 V50 H58 V60 H68 V70 H78 V80 H88 V90 H98 V100 H102" />
+      </svg>
 
       <a class="character character--right" id="bradleyLink" href="/plush/toudaisan/?lang=jp">
         <div class="portrait-wrap">
@@ -291,7 +274,9 @@
         <div class="landing" aria-hidden="true"></div>
       </a>
 
-      <div class="stairs stairs--lower" aria-hidden="true"></div>
+      <svg class="stairs stairs--lower" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-2 0 H8 V10 H18 V20 H28 V30 H38 V40 H48 V50 H58 V60 H68 V70 H78 V80 H88 V90 H98 V100 H102" />
+      </svg>
 
       <a class="character character--left" id="conceptLink" href="/plush/toudaisan/concept/?lang=jp">
         <div class="portrait-wrap">
