@@ -597,10 +597,6 @@
         <div class="brand">
           <div class="name" id="brandName">灯台さん.com</div>
           <div class="tag" id="brandTag">琥珀の空と海のあいだで、ものがたりとぬいぐるみを。</div>
-          <nav aria-label="カテゴリー">
-            <a class="pill" href="story" id="storyLink"><span class="dot"></span><span data-lang-text="storyLink">物語</span></a>
-            <a class="pill" href="plush" id="plushLink"><span class="dot"></span><span data-lang-text="plushLink">ぬいぐるみ</span></a>
-          </nav>
         </div>
       <nav class="language-switcher" aria-label="Language selection">
         <a class="pill" id="jaLanguageLink" href="/?lang=jp" lang="ja">日本語</a>
@@ -1047,23 +1043,6 @@
         // ブランド名とタグ
         document.getElementById("brandName").textContent = currentTranslations.brandName;
         document.getElementById("brandTag").textContent = currentTranslations.brandTag;
-
-        // ナビゲーションリンク
-        const storyLinkElement = document.getElementById("storyLink");
-        const plushLinkElement = document.getElementById("plushLink");
-
-        // a.pillの中のテキスト部分をspanで囲み、data-lang-text属性で選択して内容を更新
-        storyLinkElement.querySelector("span[data-lang-text]").textContent = currentTranslations.storyLink;
-        plushLinkElement.querySelector("span[data-lang-text]").textContent = currentTranslations.plushLink;
-
-        // 言語に基づいてリンクのhref属性を切り替える
-        if (langKey === "en") {
-            storyLinkElement.href = "/story_en/?lang=en";
-            plushLinkElement.href = "/plush_en/?lang=en";
-        } else {
-            storyLinkElement.href = "/story/?lang=jp";
-            plushLinkElement.href = "/plush/?lang=jp";
-        }
 
         document.getElementById("jaLanguageLink").setAttribute("aria-current", langKey === "ja" ? "page" : "false");
         document.getElementById("enLanguageLink").setAttribute("aria-current", langKey === "en" ? "page" : "false");
