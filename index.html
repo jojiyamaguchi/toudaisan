@@ -392,12 +392,14 @@
 
     #toudaisan-arm-left{
       transform-origin:55px 105px;
-      animation:toudaisan-arm-left 3.4s ease-in-out infinite;
+      will-change:transform;
+      animation:toudaisan-arm-left 4.8s ease-in-out infinite;
     }
 
     #toudaisan-arm-right{
       transform-origin:129px 105px;
-      animation:toudaisan-arm-right 4.1s ease-in-out infinite;
+      will-change:transform;
+      animation:toudaisan-arm-right 4.8s ease-in-out infinite;
     }
 
     #toudaisan-leg-left{
@@ -416,13 +418,13 @@
     }
 
     @keyframes toudaisan-arm-left{
-      0%,100%{ transform:rotate(-3deg); }
-      50%{ transform:rotate(7deg); }
+      0%,50%,100%{ transform:rotate(5deg); }
+      25%,75%{ transform:rotate(-3deg); }
     }
 
     @keyframes toudaisan-arm-right{
-      0%,100%{ transform:rotate(4deg); }
-      50%{ transform:rotate(-7deg); }
+      0%,50%,100%{ transform:rotate(-5deg); }
+      25%,75%{ transform:rotate(3deg); }
     }
 
     @keyframes toudaisan-leg-left{
@@ -482,8 +484,8 @@
           <path class="outline" d="M104 187 C105 202 105 217 108 229 C114 231 120 231 126 231" />
         </g>
         <g id="toudaisan-arm-left" class="sea-toudaisan__part">
-          <path class="outline" d="M56 103 C48 105 49 126 39 132 C29 138 21 129 20 119" />
-          <path class="outline" d="M20 119 L13 116 M20 119 L15 123 M20 119 L21 111" />
+          <path class="outline" d="M56 103 C41 105 32 113 28 129 C26 137 27 143 26 149" />
+          <path class="outline" d="M26 149 L33 146 M26 149 L20 144 M26 149 L18 152" />
         </g>
         <g id="toudaisan-arm-right" class="sea-toudaisan__part">
           <path class="outline" d="M128 103 C143 105 152 113 156 129 C158 137 157 143 158 149" />
