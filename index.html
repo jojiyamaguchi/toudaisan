@@ -41,6 +41,7 @@
       color:var(--text);
       overflow:hidden;
       background:#000;
+      cursor:pointer;
     }
 
     /* 全面のシーン */
@@ -1025,6 +1026,14 @@
     document.addEventListener("DOMContentLoaded", () => {
         const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
         const langKey = requestedLanguage && requestedLanguage.toLowerCase() === "en" ? "en" : "ja";
+        const staircaseDestination = "/staircase/?lang=" + (langKey === "en" ? "en" : "jp");
+
+        // 言語ボタンとSNSリンク以外のどこをタップしても、階段の世界へ進む
+        document.addEventListener("click", (event) => {
+          if (event.target.closest(".language-switcher, .site-footer")) return;
+          event.preventDefault();
+          window.location.assign(staircaseDestination);
+        }, true);
 
         // HTMLのlang属性を設定
         document.documentElement.lang = langKey;
