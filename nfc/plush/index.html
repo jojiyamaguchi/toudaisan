@@ -159,6 +159,21 @@
       box-shadow: 0 24px 70px var(--paper-shadow);
     }
 
+    .page--left {
+      left: 0;
+      z-index: 2;
+      border-radius: 10px 1px 1px 10px;
+      transform-origin: right center;
+      transform: rotateY(1.5deg);
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .intro.is-open .page--left {
+      opacity: 1;
+      visibility: visible;
+    }
+
     .page--right {
       right: 0;
       border-radius: 1px 10px 10px 1px;
@@ -268,6 +283,8 @@
 
     .intro.is-open .cover {
       transform: rotateY(-180deg);
+      opacity: 0;
+      visibility: hidden;
       pointer-events: none;
       box-shadow: -10px 20px 50px rgba(0, 0, 0, 0.32);
     }
@@ -362,6 +379,10 @@
         width: min(98vw, calc(82dvh * 4 / 3));
       }
 
+      .page--left {
+        border-radius: 5px 0 0 5px;
+      }
+
       .page--right {
         border-radius: 0 5px 5px 0;
       }
@@ -394,6 +415,10 @@
   <main class="intro" id="nfc-intro" aria-label="魔法のスケッチブックのアニメーション。画面に触れるとスキップします。">
     <div class="book" aria-hidden="true">
       <div class="spread">
+        <div class="page page--left">
+          <img class="page__motion" src="/MagicSketchbookPageL.gif" alt="">
+          <img class="page__still" src="/MagicSketchbookPageL.png" alt="">
+        </div>
         <div class="page page--right">
           <img class="page__motion" src="/MagicSketchbookPageR.gif" alt="">
           <img class="page__still" src="/MagicSketchbookPageR.png" alt="">
