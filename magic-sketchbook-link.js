@@ -146,7 +146,9 @@
     '  outline-offset: 5px;',
     '}',
     '.magic-sketchbook-invitation.is-opening .magic-sketchbook-hitarea {',
-    '  pointer-events: none;',
+    '  left: 0;',
+    '  width: 100%;',
+    '  pointer-events: auto;',
     '}',
     '.magic-sketchbook-spine {',
     '  position: absolute;',
@@ -234,6 +236,7 @@
     }
 
     if (hasOpened) {
+      goHome();
       return;
     }
 
