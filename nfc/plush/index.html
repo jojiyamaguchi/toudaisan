@@ -453,19 +453,26 @@
       var destination = window.toudaisanNfcDestination || '/plush/toudaisan/concept/';
       var hasNavigated = false;
       var animationStarted = false;
+      var canSkip = false;
       var timers = [];
+      var isEnglish = document.documentElement.lang === 'en';
+      var lockedHint = isEnglish ? 'Skip available in 5 seconds' : '5秒後にスキップできます';
+      var readyHint = isEnglish ? 'Touch to skip' : '画面に触れるとスキップ';
 
-      if (document.documentElement.lang === 'en') {
-        intro.setAttribute('aria-label', 'Magic sketchbook animation. Touch the screen to skip.');
-        hint.textContent = 'Touch to skip';
-      }
+      hint.textContent = lockedHint;
+      intro.setAttribute(
+        'aria-label',
+        isEnglish
+          ? 'Magic sketchbook animation. Skipping is available after 5 seconds.'
+          : '魔法のスケッチブックのアニメーション。5秒後からスキップできます。'
+      );
 
       function schedule(callback, delay) {
         timers.push(window.setTimeout(callback, delay));
       }
 
-      function goToProfile() {
-        if (hasNavigated) {
+      function goToProfile(force) {
+        if (hasNavigated || (!force && !canSkip)) {
           return;
         }
 
@@ -474,18 +481,17 @@
         window.location.replace(destination);
       }
 
-      document.addEventListener('pointerdown', goToProfile, { capture: true, once: true });
-      document.addEventListener('touchstart', goToProfile, { capture: true, once: true, passive: true });
+      document.addEventListener('pointerdown', function () {
+        goToProfile(false);
+      }, { capture: true });
+      document.addEventListener('touchstart', function () {
+        goToProfile(false);
+      }, { capture: true, passive: true });
       document.addEventListener('keydown', function (event) {
         if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
-          goToProfile();
+          goToProfile(false);
         }
       });
-
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        goToProfile();
-        return;
-      }
 
       function startAnimation() {
         if (animationStarted || hasNavigated) {
@@ -509,10 +515,23 @@
         }, 4300);
 
         schedule(function () {
+          canSkip = true;
+          hint.textContent = readyHint;
+          intro.setAttribute(
+            'aria-label',
+            isEnglish
+              ? 'Magic sketchbook animation. Touch the screen to skip.'
+              : '魔法のスケッチブックのアニメーション。画面に触れるとスキップします。'
+          );
+        }, 5000);
+
+        schedule(function () {
           intro.classList.add('is-alive');
         }, 7300);
 
-        schedule(goToProfile, 11800);
+        schedule(function () {
+          goToProfile(true);
+        }, 20000);
       }
 
       var essentialImages = Array.prototype.slice.call(
