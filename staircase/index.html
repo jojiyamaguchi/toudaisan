@@ -26,24 +26,8 @@
       min-width:0;
       color:#eee4d2;
       font-family:ui-serif,"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",Georgia,serif;
-      background:
-        linear-gradient(90deg,rgba(0,0,0,.48),transparent 13%,transparent 87%,rgba(0,0,0,.48)),
-        repeating-linear-gradient(0deg,transparent 0 148px,rgba(188,158,124,.12) 149px 151px),
-        repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 49.7%,rgba(163,135,104,.10) 50% 50.4%,rgba(255,255,255,.015) 50.7% 100%),
-        radial-gradient(circle at 50% 12%,#625548,#3a3029 54%,#1c1714);
-      background-size:auto,auto 300px,260px 300px,auto;
+      background:#17120f;
       overflow-x:hidden;
-    }
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 18% 22%,rgba(0,0,0,.18),transparent 13%),
-        radial-gradient(circle at 84% 68%,rgba(0,0,0,.22),transparent 15%),
-        linear-gradient(rgba(7,6,5,.04),rgba(7,6,5,.18));
     }
     .topbar{
       position:fixed;
@@ -103,19 +87,32 @@
     main{
       width:min(960px,100%);
       margin:0 auto;
-      padding:110px clamp(12px,4vw,42px) 130px;
+      padding:96px 0 130px;
     }
     .stairwell{
-      --level-height:clamp(390px,70vh,560px);
       position:relative;
-      height:calc(var(--level-height) + var(--level-height) + var(--level-height));
       isolation:isolate;
+      overflow:hidden;
+      background:#443a31;
+      box-shadow:0 0 55px rgba(0,0,0,.52);
+    }
+    .stairwell-background{
+      position:relative;
+      z-index:0;
+      width:100%;
+      pointer-events:none;
+    }
+    .stairwell-background img{
+      display:block;
+      width:100%;
+      height:auto;
+      margin:0;
     }
     .character{
       position:absolute;
       left:0;
       width:100%;
-      height:var(--level-height);
+      height:25%;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
@@ -141,9 +138,9 @@
     }
     .character--left::before{left:-5vw}
     .character--right::before{right:-5vw}
-    #babyLink{top:0}
-    #bradleyLink{top:var(--level-height)}
-    #conceptLink{top:calc(var(--level-height) + var(--level-height))}
+    #babyLink{top:25%}
+    #bradleyLink{top:50%}
+    #conceptLink{top:75%}
     .character--left{align-items:flex-start}
     .character--right{align-items:flex-end}
     .portrait-wrap{
@@ -189,45 +186,6 @@
       border-radius:10px;
       box-shadow:0 8px 18px rgba(43,33,27,.14);
     }
-    .landing{
-      position:relative;
-      z-index:4;
-      left:50%;
-      width:calc(100vw + 28px);
-      height:18px;
-      margin-top:8px;
-      transform:translateX(-50%);
-      flex:0 0 auto;
-      border:1px solid #332f2b;
-      background:linear-gradient(#4b443e,#292521);
-      box-shadow:0 10px 12px rgba(33,27,22,.25);
-    }
-    .stairs{
-      position:absolute;
-      left:50%;
-      z-index:1;
-      width:calc(100vw + 28px);
-      height:var(--level-height);
-      overflow:visible;
-      pointer-events:none;
-      filter:drop-shadow(0 8px 7px rgba(37,30,25,.24));
-    }
-    .stairs path{
-      fill:none;
-      stroke:var(--metal);
-      stroke-width:4;
-      stroke-linecap:square;
-      stroke-linejoin:miter;
-      vector-effect:non-scaling-stroke;
-    }
-    .stairs--upper{
-      top:var(--level-height);
-      transform:translateX(-50%);
-    }
-    .stairs--lower{
-      top:calc(var(--level-height) + var(--level-height));
-      transform:translateX(-50%) scaleX(-1);
-    }
     .direction{
       position:absolute;
       left:50%;
@@ -242,9 +200,6 @@
       50%{transform:translate(-50%,-5px)}
     }
     @media (max-width:620px){
-      main{padding-inline:8px}
-      .stairwell{--level-height:clamp(360px,66vh,460px)}
-      .landing{height:14px}
       .topbar__title{max-width:42vw}
       .pill{font-size:13px;padding:8px 9px}
     }
@@ -272,36 +227,32 @@
 
   <main>
     <div class="stairwell" aria-label="キャラクターの階段">
+      <div class="stairwell-background" aria-hidden="true">
+        <img src="/images/stairs.png" alt="">
+        <img src="/images/stairs.png" alt="">
+      </div>
+
       <a class="character character--left" id="babyLink" href="/plush/lighthousebaby/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/lighthousebaby1.png" alt="灯台の赤ちゃん">
         </div>
         <div class="nameplate" data-name="baby">灯台の赤ちゃん</div>
-        <div class="landing" aria-hidden="true"></div>
       </a>
 
-      <svg class="stairs stairs--upper" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M-2 0 H8 V10 H18 V20 H28 V30 H38 V40 H48 V50 H58 V60 H68 V70 H78 V80 H88 V90 H98 V100 H102" />
-      </svg>
 
       <div class="character character--right" id="bradleyLink">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/toudaisan_bradleyshead1.png" alt="ブラッドリーヘッド灯台さん">
         </div>
         <div class="nameplate" data-name="bradley">ブラッドリーヘッド灯台さん</div>
-        <div class="landing" aria-hidden="true"></div>
       </div>
 
-      <svg class="stairs stairs--lower" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M-2 0 H8 V10 H18 V20 H28 V30 H38 V40 H48 V50 H58 V60 H68 V70 H78 V80 H88 V90 H98 V100 H102" />
-      </svg>
 
       <a class="character character--left" id="conceptLink" href="/plush/toudaisan/concept/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/toudaisan_concept1.png" alt="灯台さん（概念）">
         </div>
         <div class="nameplate" data-name="concept">灯台さん（概念）</div>
-        <div class="landing" aria-hidden="true"></div>
       </a>
 
       <div class="direction" aria-hidden="true">↑</div>
