@@ -95,6 +95,10 @@
       {
         label: 'note',
         url: 'https://note.com/toudaisan'
+      },
+      {
+        label: 'game',
+        url: 'https://jojiyamaguchi.github.io/JSRobotBattle/'
       }
     ].forEach(function (item) {
       var link = document.createElement('a');
