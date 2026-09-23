@@ -379,10 +379,13 @@
           history.scrollRestoration = "manual";
         }
 
-        const scrollToBottom = () => {
+        const scrollToStairsBottom = () => {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-              window.scrollTo(0,document.documentElement.scrollHeight);
+              const stairwell = document.querySelector(".stairwell");
+              const stairwellBottom = stairwell.getBoundingClientRect().bottom + window.scrollY;
+              const targetPosition = Math.max(0,stairwellBottom - window.innerHeight);
+              window.scrollTo(0,targetPosition);
             });
           });
         };
@@ -395,9 +398,9 @@
           });
         });
 
-        Promise.all(imagesReady).then(scrollToBottom);
-        window.addEventListener("load",scrollToBottom,{once:true});
-        window.addEventListener("pageshow",scrollToBottom,{once:true});
+        Promise.all(imagesReady).then(scrollToStairsBottom);
+        window.addEventListener("load",scrollToStairsBottom,{once:true});
+        window.addEventListener("pageshow",scrollToStairsBottom,{once:true});
       } else if (!location.hash) {
         requestAnimationFrame(()=>window.scrollTo(0,document.documentElement.scrollHeight));
       }
