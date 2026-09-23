@@ -186,6 +186,45 @@
       border-radius:10px;
       box-shadow:0 8px 18px rgba(43,33,27,.14);
     }
+    .creator-portal{
+      display:flex;
+      justify-content:center;
+      padding:72px 20px 0;
+      text-align:center;
+    }
+    .creator-link{
+      display:inline-flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+      color:#f6d27a;
+      font-size:clamp(20px,3.5vw,28px);
+      font-weight:700;
+      letter-spacing:.06em;
+      text-decoration:none;
+    }
+    .creator-cover{
+      display:block;
+      width:min(270px,58vw);
+      height:auto;
+      border-radius:8px;
+      box-shadow:0 22px 48px rgba(0,0,0,.48);
+      transition:transform .25s ease,box-shadow .25s ease;
+    }
+    .creator-link:hover .creator-cover,
+    .creator-link:focus-visible .creator-cover{
+      transform:translateY(-6px);
+      box-shadow:0 28px 56px rgba(0,0,0,.56);
+    }
+    .creator-link:focus-visible{
+      outline:3px solid #f6d27a;
+      outline-offset:8px;
+      border-radius:8px;
+    }
+    .creator-link__label{
+      text-decoration:underline;
+      text-underline-offset:6px;
+    }
     .direction{
       position:absolute;
       left:50%;
@@ -211,7 +250,8 @@
     @media (prefers-reduced-motion:reduce){
       html{scroll-behavior:auto}
       .direction{animation:none}
-      .portrait-wrap{transition:none}
+      .portrait-wrap,
+      .creator-cover{transition:none}
     }
   </style>
 </head>
@@ -257,6 +297,13 @@
 
       <div class="direction" aria-hidden="true">↑</div>
     </div>
+
+    <section class="creator-portal" aria-label="作者プロフィール">
+      <a class="creator-link" id="creatorLink" href="/magicbook/?lang=jp">
+        <img class="creator-cover" src="/MagicSketchbookCover.png" alt="魔法のスケッチブックの表紙">
+        <span class="creator-link__label" id="creatorLabel">魔法Book</span>
+      </a>
+    </section>
   </main>
 
   <script>
@@ -269,7 +316,10 @@
         aria:"キャラクターの階段",
         bradley:"ブラッドリーヘッド灯台さん",
         concept:"灯台さん（概念）",
-        baby:"灯台の赤ちゃん"
+        baby:"灯台の赤ちゃん",
+        creator:"魔法Book",
+        creatorAria:"作者プロフィール",
+        creatorCover:"魔法のスケッチブックの表紙"
       },
       en:{
         title:"Mr Lighthouse and the Magic Sketchbook | Staircase",
@@ -279,7 +329,10 @@
         aria:"Character staircase",
         bradley:"Bradley’s Head Mr Lighthouse",
         concept:"Mr Lighthouse (Concept)",
-        baby:"Lighthouse Baby"
+        baby:"Lighthouse Baby",
+        creator:"Magic Sketchbook",
+        creatorAria:"Creator profile",
+        creatorCover:"Magic Sketchbook cover"
       }
     };
 
@@ -297,6 +350,10 @@
       document.getElementById("homeLink").href = "/?lang=" + (lang === "en" ? "en" : "jp");
       document.getElementById("jaLink").setAttribute("aria-current",lang === "ja" ? "page" : "false");
       document.getElementById("enLink").setAttribute("aria-current",lang === "en" ? "page" : "false");
+      document.querySelector(".creator-portal").setAttribute("aria-label",t.creatorAria);
+      document.getElementById("creatorLink").href = lang === "en" ? "/magicbook_en/?lang=en" : "/magicbook/?lang=jp";
+      document.getElementById("creatorLabel").textContent = t.creator;
+      document.querySelector(".creator-cover").alt = t.creatorCover;
 
       const routes = lang === "en"
         ? {
