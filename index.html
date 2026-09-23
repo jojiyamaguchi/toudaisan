@@ -1019,7 +1019,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
         const langKey = requestedLanguage && requestedLanguage.toLowerCase() === "en" ? "en" : "ja";
-        const staircaseDestination = "/staircase/?lang=" + (langKey === "en" ? "en" : "jp");
+        const staircaseDestination = "/staircase/?lang=" + (langKey === "en" ? "en" : "jp") + "&from=top";
         let canEnterStaircase = false;
 
         // 灯台さんが姿を見せた後、言語ボタンとSNSリンク以外のどこをタップしても階段の世界へ進む
