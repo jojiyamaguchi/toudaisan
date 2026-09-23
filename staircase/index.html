@@ -284,7 +284,9 @@
     };
 
     document.addEventListener("DOMContentLoaded",()=>{
-      const lang = new URLSearchParams(location.search).get("lang") === "en" ? "en" : "ja";
+      const parameters = new URLSearchParams(location.search);
+      const lang = parameters.get("lang") === "en" ? "en" : "ja";
+      const fromTopPage = parameters.get("from") === "top";
       const t = copy[lang];
       document.documentElement.lang = lang;
       document.getElementById("pageTitle").textContent = t.title;
@@ -315,7 +317,31 @@
         link.querySelector("img").alt = t[key];
       });
 
-      if (!location.hash) {
+      if (fromTopPage) {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+
+        const scrollToBottom = () => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              window.scrollTo(0,document.documentElement.scrollHeight);
+            });
+          });
+        };
+        const backgroundImages = Array.from(document.querySelectorAll(".stairwell-background img"));
+        const imagesReady = backgroundImages.map(image => {
+          if (image.complete) return Promise.resolve();
+          return new Promise(resolve => {
+            image.addEventListener("load",resolve,{once:true});
+            image.addEventListener("error",resolve,{once:true});
+          });
+        });
+
+        Promise.all(imagesReady).then(scrollToBottom);
+        window.addEventListener("load",scrollToBottom,{once:true});
+        window.addEventListener("pageshow",scrollToBottom,{once:true});
+      } else if (!location.hash) {
         requestAnimationFrame(()=>window.scrollTo(0,document.documentElement.scrollHeight));
       }
     });
