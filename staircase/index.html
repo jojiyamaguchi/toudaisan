@@ -138,6 +138,7 @@
     }
     .character--left::before{left:-5vw}
     .character--right::before{right:-5vw}
+    #nyukoLink{top:0}
     #babyLink{top:25%}
     #bradleyLink{top:50%}
     #conceptLink{top:75%}
@@ -169,6 +170,23 @@
       object-position:center bottom;
       mix-blend-mode:multiply;
       filter:drop-shadow(0 14px 12px rgba(42,31,24,.24));
+    }
+    .portrait-placeholder{
+      display:grid;
+      place-items:center;
+      width:72%;
+      aspect-ratio:4/5;
+      margin-bottom:10%;
+      padding:12px;
+      border:1px dashed rgba(240,223,186,.6);
+      border-radius:10px;
+      color:#ead7ae;
+      background:rgba(36,28,23,.58);
+      font-size:clamp(12px,1.8vw,16px);
+      font-weight:700;
+      letter-spacing:.08em;
+      line-height:1.6;
+      text-align:center;
     }
     .nameplate{
       position:relative;
@@ -272,6 +290,14 @@
         <img src="/images/stairs.png?v=1" alt="">
       </div>
 
+      <a class="character character--right" id="nyukoLink" href="/plush/nyuko/?lang=jp">
+        <div class="portrait-wrap">
+          <div class="portrait-placeholder" role="img" aria-label="水色の猫 ニュコ（画像準備中）" data-placeholder>画像準備中</div>
+        </div>
+        <div class="nameplate" data-name="nyuko">水色の猫 ニュコ</div>
+      </a>
+
+
       <a class="character character--left" id="babyLink" href="/plush/lighthousebaby/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/lighthousebaby1.png" alt="灯台の赤ちゃん">
@@ -317,6 +343,8 @@
         bradley:"灯台さん(ブラッドリーヘッド)",
         concept:"灯台さん（概念）",
         baby:"灯台の赤ちゃん",
+        nyuko:"水色の猫 ニュコ",
+        placeholder:"画像準備中",
         creator:"魔法Book",
         creatorAria:"作者プロフィール",
         creatorCover:"魔法のスケッチブックの表紙"
@@ -330,6 +358,8 @@
         bradley:"Mr. Lighthouse (Bradley’s Head)",
         concept:"Mr Lighthouse (Concept)",
         baby:"Lighthouse Baby",
+        nyuko:"Nyuko, the Blue Cat",
+        placeholder:"Image coming soon",
         creator:"Magic Sketchbook",
         creatorAria:"Creator profile",
         creatorCover:"Magic Sketchbook cover"
@@ -359,19 +389,28 @@
         ? {
             baby:"/plush_en/lighthousebaby/?lang=en",
             concept:"/plush_en/toudaisan/concept/?lang=en",
-            bradley:"/plush_en/toudaisan/bradleyshead/?lang=en"
+            bradley:"/plush_en/toudaisan/bradleyshead/?lang=en",
+            nyuko:"/plush_en/nyuko/?lang=en"
           }
         : {
             baby:"/plush/lighthousebaby/?lang=jp",
             concept:"/plush/toudaisan/concept/?lang=jp",
-            bradley:"/plush/toudaisan/bradleyshead/?lang=jp"
+            bradley:"/plush/toudaisan/bradleyshead/?lang=jp",
+            nyuko:"/plush/nyuko/?lang=jp"
           };
 
-      ["baby","concept","bradley"].forEach(key=>{
+      ["baby","concept","bradley","nyuko"].forEach(key=>{
         const link = document.getElementById(key + "Link");
         link.href = routes[key];
         link.querySelector("[data-name]").textContent = t[key];
-        link.querySelector("img").alt = t[key];
+        const image = link.querySelector("img");
+        if (image) {
+          image.alt = t[key];
+        } else {
+          const placeholder = link.querySelector("[data-placeholder]");
+          placeholder.textContent = t.placeholder;
+          placeholder.setAttribute("aria-label",t[key] + " (" + t.placeholder + ")");
+        }
       });
 
       if (fromTopPage) {
