@@ -115,6 +115,25 @@ a {
   object-fit: contain;
 }
 
+.portrait-placeholder {
+  display: grid;
+  place-items: center;
+  width: min(100%, 285px);
+  aspect-ratio: 4 / 5;
+  padding: 24px;
+  border: 1px dashed #cdbf9f;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(246, 210, 122, 0.18), transparent 58%),
+    #faf7ef;
+  color: #8a795f;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.8;
+  text-align: center;
+}
+
 .eyebrow {
   margin: 0 0 12px;
   color: var(--accent-deep);
