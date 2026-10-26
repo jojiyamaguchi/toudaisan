@@ -26,7 +26,7 @@
 
     const image = document.createElement('img');
     image.className = 'model-photo';
-    image.loading = 'lazy';
+    image.loading = 'eager';
     image.decoding = 'async';
     image.alt = description;
 
