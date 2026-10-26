@@ -112,7 +112,7 @@
       position:absolute;
       left:0;
       width:100%;
-      height:25%;
+      height:16.6667%;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
@@ -138,10 +138,11 @@
     }
     .character--left::before{left:-5vw}
     .character--right::before{right:-5vw}
-    #nyukoLink{top:0}
-    #babyLink{top:25%}
-    #bradleyLink{top:50%}
-    #conceptLink{top:75%}
+    #burnhamLink{top:16.6667%}
+    #nyukoLink{top:33.3333%}
+    #babyLink{top:50%}
+    #bradleyLink{top:66.6667%}
+    #conceptLink{top:83.3333%}
     .character--left{align-items:flex-start}
     .character--right{align-items:flex-end}
     .portrait-wrap{
@@ -288,7 +289,16 @@
       <div class="stairwell-background" aria-hidden="true">
         <img src="/images/stairs.png?v=1" alt="">
         <img src="/images/stairs.png?v=1" alt="">
+        <img src="/images/stairs.png?v=1" alt="">
       </div>
+
+      <a class="character character--left" id="burnhamLink" href="/plush/toudaisan/burnham/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/toudaisan_burnham1.png" alt="灯台さん(バーンハム)">
+        </div>
+        <div class="nameplate" data-name="burnham">灯台さん(バーンハム)</div>
+      </a>
+
 
       <a class="character character--right" id="nyukoLink" href="/plush/nyuko/?lang=jp">
         <div class="portrait-wrap">
@@ -340,6 +350,7 @@
         world:"灯台さんと魔法の本",
         home:"トップページ",
         aria:"キャラクターの階段",
+        burnham:"灯台さん(バーンハム)",
         bradley:"灯台さん(ブラッドリーヘッド)",
         concept:"灯台さん（概念）",
         baby:"灯台の赤ちゃん",
@@ -355,6 +366,7 @@
         world:"Mr Lighthouse and the Magic Sketchbook",
         home:"Top page",
         aria:"Character staircase",
+        burnham:"Mr. Lighthouse (Burnham)",
         bradley:"Mr. Lighthouse (Bradley’s Head)",
         concept:"Mr Lighthouse (Concept)",
         baby:"Lighthouse Baby",
@@ -388,18 +400,20 @@
       const routes = lang === "en"
         ? {
             baby:"/plush_en/lighthousebaby/?lang=en",
+            burnham:"/plush_en/toudaisan/burnham/?lang=en",
             concept:"/plush_en/toudaisan/concept/?lang=en",
             bradley:"/plush_en/toudaisan/bradleyshead/?lang=en",
             nyuko:"/plush_en/nyuko/?lang=en"
           }
         : {
             baby:"/plush/lighthousebaby/?lang=jp",
+            burnham:"/plush/toudaisan/burnham/?lang=jp",
             concept:"/plush/toudaisan/concept/?lang=jp",
             bradley:"/plush/toudaisan/bradleyshead/?lang=jp",
             nyuko:"/plush/nyuko/?lang=jp"
           };
 
-      ["baby","concept","bradley","nyuko"].forEach(key=>{
+      ["baby","burnham","concept","bradley","nyuko"].forEach(key=>{
         const link = document.getElementById(key + "Link");
         link.href = routes[key];
         link.querySelector("[data-name]").textContent = t[key];

@@ -18,6 +18,24 @@
         'For reasons of their own, Concept-san looks forward to new lighthouses being built.'
       ]
     },
+    burnham: {
+      ja: [
+        'チビはフリスビーが好き。',
+        'チビが住んでいる灯台は満ち潮になると海の中になっちゃう。',
+        '引き潮の時は歩いて灯台から出入りする。',
+        '満ち潮の時は泳いで灯台から出入りする。',
+        'チビは撫でてもらうのが好き。',
+        'チビは舌をしまうのが得意ではない。'
+      ],
+      en: [
+        'Chibi loves playing Frisbee.',
+        'At high tide, the lighthouse where Chibi lives ends up surrounded by the sea.',
+        'At low tide, Chibi walks in and out of the lighthouse.',
+        'At high tide, Chibi swims in and out of the lighthouse.',
+        'Chibi loves being petted.',
+        'Chibi is not very good at keeping his tongue in his mouth.'
+      ]
+    },
     lighthousebaby: {
       ja: [
         '灯台の赤ちゃんの大好物は、赤カブのピクルスのサンドイッチ。',
