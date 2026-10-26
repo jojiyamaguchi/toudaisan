@@ -278,6 +278,28 @@ a {
   line-height: 1.8;
 }
 
+
+.model-figure {
+  margin: 16px 0 0;
+}
+
+.model-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f5f2eb;
+  object-fit: cover;
+}
+
+.model-caption {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 720px) {
   .profile-page {
     margin: 20px auto;
