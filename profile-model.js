@@ -46,10 +46,6 @@
       figure.className = 'model-figure';
       figure.appendChild(image);
 
-      const caption = document.createElement('figcaption');
-      caption.className = 'model-caption';
-      caption.textContent = description;
-      figure.appendChild(caption);
 
       const descriptionElement = targetRow.querySelector('dd');
       (descriptionElement || targetRow).appendChild(figure);

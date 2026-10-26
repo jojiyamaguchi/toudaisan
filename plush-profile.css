@@ -293,13 +293,6 @@ a {
   object-fit: cover;
 }
 
-.model-caption {
-  margin-top: 7px;
-  color: var(--muted);
-  font-size: 0.76rem;
-  line-height: 1.5;
-}
-
 @media (max-width: 720px) {
   .profile-page {
     margin: 20px auto;
