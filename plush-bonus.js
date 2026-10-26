@@ -18,6 +18,22 @@
         'For reasons of their own, Concept-san looks forward to new lighthouses being built.'
       ]
     },
+    arahisa: {
+      ja: [
+        'アラヒサ灯台さんはリングを「手すり」と呼ぶとちょっと機嫌悪くなる。',
+        'アラヒサ灯台さんのリングは冬には暖かいマフラーの代わりになるらしい。',
+        'アラヒサ灯台さんが夜怪しく光って浮いているのを見たという人もいる。',
+        'アラヒサ灯台さんは釣りをしてる人を見るのが好き。',
+        'アラヒサ灯台さんは拝まれるとちょっと困った表情になる…らしい。'
+      ],
+      en: [
+        'Arahisa gets a little grumpy if you call the ring a “handrail.”',
+        'Arahisa’s ring apparently doubles as a warm scarf in winter.',
+        'Some people say they have seen Arahisa floating and glowing mysteriously at night.',
+        'Arahisa likes watching people fish.',
+        'When people pray to Arahisa, a slightly troubled expression appears… apparently.'
+      ]
+    },
     burnham: {
       ja: [
         'チビはフリスビーが好き。',
