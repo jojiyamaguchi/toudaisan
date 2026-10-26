@@ -2,11 +2,22 @@
   const portrait = document.querySelector('img.portrait[src^="/images/"]');
   if (!portrait) return;
 
-  const modelRow = Array.from(document.querySelectorAll('.fact-row')).find((row) => {
+  const factRows = Array.from(document.querySelectorAll('.fact-row'));
+  const locationLabels = [
+    '住んでいるところ',
+    '住んでるところ',
+    'where he lives',
+    'where she lives',
+    'where they live',
+    'home',
+    'モデル',
+    'model'
+  ];
+  const targetRow = factRows.find((row) => {
     const label = row.querySelector('dt')?.textContent.trim().toLowerCase();
-    return label === 'モデル' || label === 'model';
-  });
-  if (!modelRow || modelRow.querySelector('.model-figure')) return;
+    return locationLabels.includes(label);
+  }) || factRows[0];
+  if (!targetRow || targetRow.querySelector('.model-figure')) return;
 
   const portraitUrl = new URL(portrait.getAttribute('src'), window.location.origin);
   const filename = portraitUrl.pathname.split('/').pop() || '';
@@ -18,7 +29,7 @@
     (extension) => `/images/${stem}_model.${extension}`
   );
   const isJapanese = document.documentElement.lang.toLowerCase().startsWith('ja');
-  const description = isJapanese ? 'モデルとなった灯台' : 'The lighthouse model';
+  const description = isJapanese ? '住んでいるところ' : 'Where this character lives';
   let candidateIndex = 0;
 
   const tryNextImage = () => {
@@ -40,8 +51,8 @@
       caption.textContent = description;
       figure.appendChild(caption);
 
-      const descriptionElement = modelRow.querySelector('dd');
-      (descriptionElement || modelRow).appendChild(figure);
+      const descriptionElement = targetRow.querySelector('dd');
+      (descriptionElement || targetRow).appendChild(figure);
     }, { once: true });
 
     image.addEventListener('error', () => {
