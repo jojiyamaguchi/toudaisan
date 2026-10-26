@@ -24,7 +24,7 @@
   const tryNextImage = () => {
     if (candidateIndex >= candidates.length) return;
 
-    const image = new Image();
+    const image = document.createElement('img');
     image.className = 'model-photo';
     image.loading = 'lazy';
     image.decoding = 'async';
