@@ -112,7 +112,7 @@
       position:absolute;
       left:0;
       width:100%;
-      height:12.5%;
+      height:10%;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
@@ -138,14 +138,15 @@
     }
     .character--left::before{left:-5vw}
     .character--right::before{right:-5vw}
-    #nyukoLink{top:0}
-    #babyLink{top:12.5%}
-    #ishikariLink{top:25%}
-    #amedeeLink{top:37.5%}
-    #arahisaLink{top:50%}
-    #burnhamLink{top:62.5%}
-    #bradleyLink{top:75%}
-    #conceptLink{top:87.5%}
+    #nyukoLink{top:10%}
+    #babyLink{top:20%}
+    #ancestorLink{top:30%}
+    #ishikariLink{top:40%}
+    #amedeeLink{top:50%}
+    #arahisaLink{top:60%}
+    #burnhamLink{top:70%}
+    #bradleyLink{top:80%}
+    #conceptLink{top:90%}
     .character--left{align-items:flex-start}
     .character--right{align-items:flex-end}
     .portrait-wrap{
@@ -294,9 +295,10 @@
         <img src="/images/stairs.png?v=1" alt="">
         <img src="/images/stairs.png?v=1" alt="">
         <img src="/images/stairs.png?v=1" alt="">
+        <img src="/images/stairs.png?v=1" alt="">
       </div>
 
-      <a class="character character--right" id="nyukoLink" href="/plush/nyuko/?lang=jp">
+      <a class="character character--left" id="nyukoLink" href="/plush/nyuko/?lang=jp">
         <div class="portrait-wrap">
           <div class="portrait-placeholder" role="img" aria-label="水色の猫 ニュコ（画像準備中）" data-placeholder>画像準備中</div>
         </div>
@@ -304,11 +306,19 @@
       </a>
 
 
-      <a class="character character--left" id="babyLink" href="/plush/lighthousebaby/?lang=jp">
+      <a class="character character--right" id="babyLink" href="/plush/lighthousebaby/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/lighthousebaby1.png" alt="灯台の赤ちゃん">
         </div>
         <div class="nameplate" data-name="baby">灯台の赤ちゃん</div>
+      </a>
+
+
+      <a class="character character--left" id="ancestorLink" href="/plush/toudaisan/ancestor/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/toudaisan_ancestor1.png" alt="灯台さんのご先祖さま">
+        </div>
+        <div class="nameplate" data-name="ancestor">灯台さんのご先祖さま</div>
       </a>
 
 
@@ -378,6 +388,7 @@
         world:"灯台さんと魔法の本",
         home:"トップページ",
         aria:"キャラクターの階段",
+        ancestor:"灯台さんのご先祖さま",
         ishikari:"灯台さん(イシカリ)",
         amedee:"灯台さん(アメデ)",
         arahisa:"灯台さん(アラヒサ)",
@@ -397,6 +408,7 @@
         world:"Mr Lighthouse and the Magic Sketchbook",
         home:"Top page",
         aria:"Character staircase",
+        ancestor:"The Mr. Lighthouses’ Ancestor",
         ishikari:"Mr. Lighthouse (Ishikari)",
         amedee:"Miss Lighthouse (Amédée)",
         arahisa:"Mr. Lighthouse (Arahisa)",
@@ -433,6 +445,7 @@
 
       const routes = lang === "en"
         ? {
+            ancestor:"/plush_en/toudaisan/ancestor/?lang=en",
             ishikari:"/plush_en/toudaisan/ishikari/?lang=en",
             amedee:"/plush_en/toudaisan/amedee/?lang=en",
             baby:"/plush_en/lighthousebaby/?lang=en",
@@ -443,6 +456,7 @@
             nyuko:"/plush_en/nyuko/?lang=en"
           }
         : {
+            ancestor:"/plush/toudaisan/ancestor/?lang=jp",
             ishikari:"/plush/toudaisan/ishikari/?lang=jp",
             amedee:"/plush/toudaisan/amedee/?lang=jp",
             baby:"/plush/lighthousebaby/?lang=jp",
@@ -453,7 +467,7 @@
             nyuko:"/plush/nyuko/?lang=jp"
           };
 
-      ["ishikari","amedee","arahisa","baby","burnham","concept","bradley","nyuko"].forEach(key=>{
+      ["ancestor","ishikari","amedee","arahisa","baby","burnham","concept","bradley","nyuko"].forEach(key=>{
         const link = document.getElementById(key + "Link");
         link.href = routes[key];
         link.querySelector("[data-name]").textContent = t[key];
