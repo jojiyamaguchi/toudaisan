@@ -18,6 +18,20 @@
         'For reasons of their own, Concept-san looks forward to new lighthouses being built.'
       ]
     },
+    ancestor: {
+      ja: [
+        'ご先祖さまのモフモフには灯台さんと似た灯りが隠れている。',
+        '古文書に書かれた妖怪「やみてらし」に似てるとの声も。',
+        '毛を剃ったら灯台さんにそっくりなんだと、本人は主張している。',
+        '灯台さん達は、本人がご先祖さまだというのだからそうに違いない、というスタンス。'
+      ],
+      en: [
+        'Hidden inside the Ancestor’s fluff is a light much like the ones carried by the Mr. Lighthouses.',
+        'Some say the Ancestor resembles “Yamiterashi,” a yokai described in an ancient manuscript.',
+        'The Ancestor insists that without all that fur, they would look just like a Mr. Lighthouse.',
+        'The Mr. Lighthouses take the view that if the Ancestor says they are their ancestor, then it must be true.'
+      ]
+    },
     ishikari: {
       ja: [
         'イシカリ灯台さんはたくましい海の男！だけど荒っぽいことはちょっと苦手だ！',
