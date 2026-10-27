@@ -18,6 +18,20 @@
         'For reasons of their own, Concept-san looks forward to new lighthouses being built.'
       ]
     },
+    amedee: {
+      ja: [
+        'アメデ灯台さんは背が高くて、実は力も強い。',
+        'アメデ灯台さんは超南国育ち。「天国に一番近い島」ともいわれる所に住んでいる。',
+        'アメデ灯台さんは、白いワンピースのドレスがお気に入り。',
+        'アメデ灯台さんは本当は腕相撲がとても強いけど、内緒にしてる。'
+      ],
+      en: [
+        'Amédée is tall—and surprisingly strong.',
+        'Amédée grew up in the deep tropics. She lives in a place sometimes called “the island closest to heaven.”',
+        'Amédée’s favorite outfit is a white dress.',
+        'Amédée is actually very good at arm wrestling, but she keeps it a secret.'
+      ]
+    },
     arahisa: {
       ja: [
         'アラヒサ灯台さんはリングを「手すり」と呼ぶとちょっと機嫌悪くなる。',

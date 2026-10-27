@@ -112,7 +112,7 @@
       position:absolute;
       left:0;
       width:100%;
-      height:16.6667%;
+      height:12.5%;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
@@ -138,12 +138,13 @@
     }
     .character--left::before{left:-5vw}
     .character--right::before{right:-5vw}
-    #nyukoLink{top:0}
-    #babyLink{top:16.6667%}
-    #arahisaLink{top:33.3333%}
-    #burnhamLink{top:50%}
-    #bradleyLink{top:66.6667%}
-    #conceptLink{top:83.3333%}
+    #nyukoLink{top:12.5%}
+    #babyLink{top:25%}
+    #amedeeLink{top:37.5%}
+    #arahisaLink{top:50%}
+    #burnhamLink{top:62.5%}
+    #bradleyLink{top:75%}
+    #conceptLink{top:87.5%}
     .character--left{align-items:flex-start}
     .character--right{align-items:flex-end}
     .portrait-wrap{
@@ -291,9 +292,10 @@
         <img src="/images/stairs.png?v=1" alt="">
         <img src="/images/stairs.png?v=1" alt="">
         <img src="/images/stairs.png?v=1" alt="">
+        <img src="/images/stairs.png?v=1" alt="">
       </div>
 
-      <a class="character character--right" id="nyukoLink" href="/plush/nyuko/?lang=jp">
+      <a class="character character--left" id="nyukoLink" href="/plush/nyuko/?lang=jp">
         <div class="portrait-wrap">
           <div class="portrait-placeholder" role="img" aria-label="水色の猫 ニュコ（画像準備中）" data-placeholder>画像準備中</div>
         </div>
@@ -301,11 +303,19 @@
       </a>
 
 
-      <a class="character character--left" id="babyLink" href="/plush/lighthousebaby/?lang=jp">
+      <a class="character character--right" id="babyLink" href="/plush/lighthousebaby/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/lighthousebaby1.png" alt="灯台の赤ちゃん">
         </div>
         <div class="nameplate" data-name="baby">灯台の赤ちゃん</div>
+      </a>
+
+
+      <a class="character character--left" id="amedeeLink" href="/plush/toudaisan/amedee/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/toudaisan_amedee1.png" alt="灯台さん(アメデ)">
+        </div>
+        <div class="nameplate" data-name="amedee">灯台さん(アメデ)</div>
       </a>
 
 
@@ -359,6 +369,7 @@
         world:"灯台さんと魔法の本",
         home:"トップページ",
         aria:"キャラクターの階段",
+        amedee:"灯台さん(アメデ)",
         arahisa:"灯台さん(アラヒサ)",
         burnham:"灯台さん(バーンハム)",
         bradley:"灯台さん(ブラッドリーヘッド)",
@@ -376,6 +387,7 @@
         world:"Mr Lighthouse and the Magic Sketchbook",
         home:"Top page",
         aria:"Character staircase",
+        amedee:"Mr. Lighthouse (Amédée)",
         arahisa:"Mr. Lighthouse (Arahisa)",
         burnham:"Mr. Lighthouse (Burnham)",
         bradley:"Mr. Lighthouse (Bradley’s Head)",
@@ -426,7 +438,7 @@
             nyuko:"/plush/nyuko/?lang=jp"
           };
 
-      ["arahisa","baby","burnham","concept","bradley","nyuko"].forEach(key=>{
+      ["amedee","arahisa","baby","burnham","concept","bradley","nyuko"].forEach(key=>{
         const link = document.getElementById(key + "Link");
         link.href = routes[key];
         link.querySelector("[data-name]").textContent = t[key];
