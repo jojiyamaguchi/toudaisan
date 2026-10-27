@@ -2,6 +2,20 @@
   'use strict';
 
   var bonuses = {
+    bradleyshead: {
+      ja: [
+        'とっても優しい灯台さん。かつて、自分の灯台を見ながらスケッチしていた少年の影響で、赤カブのピクルスのサンドイッチが好き。',
+        '灯台さんは、ネズミくらいの大きさ、人くらいの大きさ、灯台くらいの大きさ、と自由に大きさを変えられる。でも大きいのは疲れるみたい。',
+        '実は、双子の兄弟がいる。',
+        '灯台さんはいろんな世界に現れているようだ。'
+      ],
+      en: [
+        'A very gentle Mr. Lighthouse. Influenced by a boy who once sketched while looking at his lighthouse, he likes sandwiches made with pickled red turnip.',
+        'Mr. Lighthouses can freely change their size—from mouse-sized, to human-sized, to lighthouse-sized. But being big seems to tire them out.',
+        'He actually has a twin brother.',
+        'Mr. Lighthouse seems to appear in many different worlds.'
+      ]
+    },
     concept: {
       ja: [
         '概念さんにはモデルはいませんが、シルクロードにあったという砂漠の灯台をイメージしています。',
