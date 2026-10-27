@@ -18,6 +18,22 @@
         'For reasons of their own, Concept-san looks forward to new lighthouses being built.'
       ]
     },
+    ishikari: {
+      ja: [
+        'イシカリ灯台さんはたくましい海の男！だけど荒っぽいことはちょっと苦手だ！',
+        'イシカリ灯台さんはいろんなロープワークを知っている。いつか使う時がきっとくる！',
+        'イシカリ灯台さんはロープワークの練習の合間にちょっとマクラメ編みもやってみたりする。',
+        'イシカリ灯台さんは釣りを見るのが好きだが、魚に触るのはちょっと苦手。',
+        'イシカリ灯台さんは釣り人の魚をそっと逃がしたりして、怒られたことがある。'
+      ],
+      en: [
+        'Ishikari is a rugged man of the sea! But rough-and-tumble things are not really his strong suit!',
+        'Ishikari knows all kinds of ropework. Someday, the chance to use it will surely come!',
+        'Between ropework practice sessions, Ishikari sometimes tries a little macramé too.',
+        'Ishikari likes watching people fish, but he is not very comfortable touching fish.',
+        'Ishikari has gotten in trouble for quietly letting anglers’ fish escape.'
+      ]
+    },
     amedee: {
       ja: [
         'アメデ灯台さんは背が高くて、実は力も強い。',

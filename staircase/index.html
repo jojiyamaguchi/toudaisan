@@ -138,8 +138,9 @@
     }
     .character--left::before{left:-5vw}
     .character--right::before{right:-5vw}
-    #nyukoLink{top:12.5%}
-    #babyLink{top:25%}
+    #nyukoLink{top:0}
+    #babyLink{top:12.5%}
+    #ishikariLink{top:25%}
     #amedeeLink{top:37.5%}
     #arahisaLink{top:50%}
     #burnhamLink{top:62.5%}
@@ -311,7 +312,15 @@
       </a>
 
 
-      <a class="character character--left" id="amedeeLink" href="/plush/toudaisan/amedee/?lang=jp">
+      <a class="character character--left" id="ishikariLink" href="/plush/toudaisan/ishikari/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/toudaisan_ishikari1.png" alt="灯台さん(イシカリ)">
+        </div>
+        <div class="nameplate" data-name="ishikari">灯台さん(イシカリ)</div>
+      </a>
+
+
+      <a class="character character--right" id="amedeeLink" href="/plush/toudaisan/amedee/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/toudaisan_amedee1.png" alt="灯台さん(アメデ)">
         </div>
@@ -319,7 +328,7 @@
       </a>
 
 
-      <a class="character character--right" id="arahisaLink" href="/plush/toudaisan/arahisa/?lang=jp">
+      <a class="character character--left" id="arahisaLink" href="/plush/toudaisan/arahisa/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/toudaisan_arahisa1.png" alt="灯台さん(アラヒサ)">
         </div>
@@ -327,7 +336,7 @@
       </a>
 
 
-      <a class="character character--left" id="burnhamLink" href="/plush/toudaisan/burnham/?lang=jp">
+      <a class="character character--right" id="burnhamLink" href="/plush/toudaisan/burnham/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/toudaisan_burnham1.png" alt="灯台さん(バーンハム)">
         </div>
@@ -335,7 +344,7 @@
       </a>
 
 
-      <a class="character character--right" id="bradleyLink" href="/plush/toudaisan/bradleyshead/?lang=jp">
+      <a class="character character--left" id="bradleyLink" href="/plush/toudaisan/bradleyshead/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/toudaisan_bradleyshead1.png" alt="灯台さん(ブラッドリーヘッド)">
         </div>
@@ -343,7 +352,7 @@
       </a>
 
 
-      <a class="character character--left" id="conceptLink" href="/plush/toudaisan/concept/?lang=jp">
+      <a class="character character--right" id="conceptLink" href="/plush/toudaisan/concept/?lang=jp">
         <div class="portrait-wrap">
           <img class="portrait" src="/images/toudaisan_concept1.png" alt="灯台さん（概念）">
         </div>
@@ -369,6 +378,7 @@
         world:"灯台さんと魔法の本",
         home:"トップページ",
         aria:"キャラクターの階段",
+        ishikari:"灯台さん(イシカリ)",
         amedee:"灯台さん(アメデ)",
         arahisa:"灯台さん(アラヒサ)",
         burnham:"灯台さん(バーンハム)",
@@ -387,6 +397,7 @@
         world:"Mr Lighthouse and the Magic Sketchbook",
         home:"Top page",
         aria:"Character staircase",
+        ishikari:"Mr. Lighthouse (Ishikari)",
         amedee:"Miss Lighthouse (Amédée)",
         arahisa:"Mr. Lighthouse (Arahisa)",
         burnham:"Mr. Lighthouse (Burnham)",
@@ -422,6 +433,7 @@
 
       const routes = lang === "en"
         ? {
+            ishikari:"/plush_en/toudaisan/ishikari/?lang=en",
             amedee:"/plush_en/toudaisan/amedee/?lang=en",
             baby:"/plush_en/lighthousebaby/?lang=en",
             arahisa:"/plush_en/toudaisan/arahisa/?lang=en",
@@ -431,6 +443,7 @@
             nyuko:"/plush_en/nyuko/?lang=en"
           }
         : {
+            ishikari:"/plush/toudaisan/ishikari/?lang=jp",
             amedee:"/plush/toudaisan/amedee/?lang=jp",
             baby:"/plush/lighthousebaby/?lang=jp",
             arahisa:"/plush/toudaisan/arahisa/?lang=jp",
@@ -440,7 +453,7 @@
             nyuko:"/plush/nyuko/?lang=jp"
           };
 
-      ["amedee","arahisa","baby","burnham","concept","bradley","nyuko"].forEach(key=>{
+      ["ishikari","amedee","arahisa","baby","burnham","concept","bradley","nyuko"].forEach(key=>{
         const link = document.getElementById(key + "Link");
         link.href = routes[key];
         link.querySelector("[data-name]").textContent = t[key];
