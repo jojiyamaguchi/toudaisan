@@ -355,7 +355,7 @@
       border-radius: 999px;
       background: rgba(17, 9, 6, 0.46);
       color: rgba(244, 234, 217, 0.75);
-      font-size: 0.82rem;
+      font-size: 0.95rem;
       line-height: 1;
       letter-spacing: 0.04em;
       backdrop-filter: blur(5px);
@@ -364,14 +364,17 @@
 
     .bonus-reveal {
       position: absolute;
-      inset: 7% 4%;
+      top: 50%;
+      left: 50%;
       z-index: 12;
       display: grid;
       place-items: center;
+      width: min(112%, 1000px);
+      max-height: min(80vh, 720px);
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transform: translateY(18px) scale(0.98);
+      transform: translate(-50%, calc(-50% + 22px)) scale(0.97);
       transition:
         opacity 900ms ease,
         transform 1000ms cubic-bezier(0.2, 0.75, 0.22, 1),
@@ -382,32 +385,32 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transform: translateY(0) scale(1);
+      transform: translate(-50%, -50%) scale(1);
       transition-delay: 0s;
     }
 
     .bonus-card {
-      width: min(82%, 760px);
-      max-height: 88%;
+      width: 100%;
+      max-height: min(76vh, 680px);
       overflow: auto;
-      padding: clamp(13px, 2.8vw, 28px);
+      padding: clamp(22px, 3.5vw, 42px);
       color: #4b3322;
       text-align: center;
       background:
-        linear-gradient(rgba(255, 247, 224, 0.94), rgba(239, 218, 174, 0.94)),
+        linear-gradient(rgba(255, 247, 224, 0.96), rgba(239, 218, 174, 0.96)),
         #ead5a8;
       border: 1px solid rgba(105, 67, 35, 0.4);
-      border-radius: clamp(8px, 1.4vw, 15px);
+      border-radius: clamp(10px, 1.6vw, 18px);
       box-shadow:
-        0 14px 35px rgba(48, 25, 13, 0.32),
-        inset 0 0 30px rgba(123, 80, 36, 0.12);
+        0 18px 44px rgba(48, 25, 13, 0.36),
+        inset 0 0 36px rgba(123, 80, 36, 0.12);
       scrollbar-width: thin;
     }
 
     .bonus-reveal__label {
-      margin: 0 0 0.5em;
+      margin: 0 0 0.6em;
       color: #8a5b2c;
-      font-size: clamp(0.58rem, 1.35vw, 0.78rem);
+      font-size: clamp(0.82rem, 1.6vw, 1rem);
       font-weight: 800;
       letter-spacing: 0.13em;
     }
@@ -415,29 +418,29 @@
     .bonus-reveal__text {
       margin: 0;
       font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
-      font-size: clamp(0.72rem, 1.9vw, 1.12rem);
+      font-size: clamp(1.05rem, 2.25vw, 1.5rem);
       font-weight: 650;
       line-height: 1.72;
       text-wrap: pretty;
     }
 
     .bonus-reveal__secret {
-      margin: 0.9em 0 0;
+      margin: 1.15em 0 0;
       color: #755a43;
-      font-size: clamp(0.54rem, 1.25vw, 0.72rem);
-      line-height: 1.55;
+      font-size: clamp(0.76rem, 1.45vw, 0.95rem);
+      line-height: 1.65;
     }
 
     .bonus-reveal__button {
-      min-width: 90px;
-      margin-top: clamp(9px, 1.8vw, 16px);
-      padding: 8px 24px;
+      min-width: 112px;
+      margin-top: clamp(14px, 2vw, 22px);
+      padding: 11px 30px;
       border: 1px solid #6b4426;
       border-radius: 999px;
       color: #fff7e8;
       background: #704524;
       font: inherit;
-      font-size: clamp(0.72rem, 1.5vw, 0.9rem);
+      font-size: clamp(0.95rem, 1.7vw, 1.12rem);
       font-weight: 800;
       letter-spacing: 0.06em;
       cursor: pointer;
@@ -506,28 +509,35 @@
 
     @media (max-width: 640px) {
       .bonus-reveal {
-        inset: 5% 2.5%;
+        width: 96vw;
+        max-height: 82vh;
       }
 
       .bonus-card {
-        width: 91%;
-        max-height: 92%;
-        padding: 11px 14px;
+        width: 100%;
+        max-height: 78vh;
+        padding: 18px 20px;
+      }
+
+      .bonus-reveal__label {
+        font-size: 0.86rem;
       }
 
       .bonus-reveal__text {
-        font-size: clamp(0.66rem, 2.75vw, 0.84rem);
-        line-height: 1.58;
+        font-size: clamp(1rem, 4.2vw, 1.22rem);
+        line-height: 1.65;
       }
 
       .bonus-reveal__secret {
-        margin-top: 0.65em;
-        font-size: clamp(0.5rem, 2.1vw, 0.66rem);
+        margin-top: 0.9em;
+        font-size: clamp(0.78rem, 3.25vw, 0.92rem);
       }
 
       .bonus-reveal__button {
-        margin-top: 7px;
-        padding: 7px 22px;
+        min-width: 108px;
+        margin-top: 12px;
+        padding: 10px 28px;
+        font-size: 1rem;
       }
 
       .book {
