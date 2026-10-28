@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="/images/toudaisan_concept1.png">
   <title>魔法のスケッチブック | 灯台さんと魔法の本</title>
   <meta name="robots" content="noindex, follow">
+  <script src="/plush-bonus.js?v=8"></script>
   <script>
     (function () {
       'use strict';
@@ -69,18 +70,23 @@
       }
 
       var route = routes[selectedType];
-      var bonusIndex = Math.floor(Math.random() * route.bonusCount);
+      var localizedBonuses = window.toudaisanPlushBonuses
+        && window.toudaisanPlushBonuses[selectedType]
+        && window.toudaisanPlushBonuses[selectedType][requestedLanguage];
+      var bonusIndex = localizedBonuses && localizedBonuses.length
+        ? Math.floor(Math.random() * localizedBonuses.length)
+        : 0;
 
       window.toudaisanNfcDestination = route[requestedLanguage];
+      window.toudaisanNfcBonusText = localizedBonuses && localizedBonuses[bonusIndex]
+        ? localizedBonuses[bonusIndex]
+        : '';
       document.documentElement.lang = requestedLanguage;
 
       try {
-        window.sessionStorage.setItem('toudaisan-plush-bonus', JSON.stringify({
-          type: selectedType,
-          bonus: bonusIndex
-        }));
+        window.sessionStorage.removeItem('toudaisan-plush-bonus');
       } catch (error) {
-        // The profile page still opens normally when temporary storage is unavailable.
+        // The NFC experience still works when temporary storage is unavailable.
       }
     })();
   </script>
@@ -356,6 +362,100 @@
       -webkit-backdrop-filter: blur(5px);
     }
 
+    .bonus-reveal {
+      position: absolute;
+      inset: 7% 4%;
+      z-index: 12;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(18px) scale(0.98);
+      transition:
+        opacity 900ms ease,
+        transform 1000ms cubic-bezier(0.2, 0.75, 0.22, 1),
+        visibility 0s linear 1000ms;
+    }
+
+    .intro.is-bonus-visible .bonus-reveal {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+      transition-delay: 0s;
+    }
+
+    .bonus-card {
+      width: min(82%, 760px);
+      max-height: 88%;
+      overflow: auto;
+      padding: clamp(13px, 2.8vw, 28px);
+      color: #4b3322;
+      text-align: center;
+      background:
+        linear-gradient(rgba(255, 247, 224, 0.94), rgba(239, 218, 174, 0.94)),
+        #ead5a8;
+      border: 1px solid rgba(105, 67, 35, 0.4);
+      border-radius: clamp(8px, 1.4vw, 15px);
+      box-shadow:
+        0 14px 35px rgba(48, 25, 13, 0.32),
+        inset 0 0 30px rgba(123, 80, 36, 0.12);
+      scrollbar-width: thin;
+    }
+
+    .bonus-reveal__label {
+      margin: 0 0 0.5em;
+      color: #8a5b2c;
+      font-size: clamp(0.58rem, 1.35vw, 0.78rem);
+      font-weight: 800;
+      letter-spacing: 0.13em;
+    }
+
+    .bonus-reveal__text {
+      margin: 0;
+      font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+      font-size: clamp(0.72rem, 1.9vw, 1.12rem);
+      font-weight: 650;
+      line-height: 1.72;
+      text-wrap: pretty;
+    }
+
+    .bonus-reveal__secret {
+      margin: 0.9em 0 0;
+      color: #755a43;
+      font-size: clamp(0.54rem, 1.25vw, 0.72rem);
+      line-height: 1.55;
+    }
+
+    .bonus-reveal__button {
+      min-width: 90px;
+      margin-top: clamp(9px, 1.8vw, 16px);
+      padding: 8px 24px;
+      border: 1px solid #6b4426;
+      border-radius: 999px;
+      color: #fff7e8;
+      background: #704524;
+      font: inherit;
+      font-size: clamp(0.72rem, 1.5vw, 0.9rem);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      box-shadow: 0 5px 14px rgba(64, 34, 17, 0.25);
+    }
+
+    .bonus-reveal__button:hover,
+    .bonus-reveal__button:focus-visible {
+      background: #8a572d;
+      outline: 2px solid #d49a4a;
+      outline-offset: 3px;
+    }
+
+    .bonus-reveal__button:disabled {
+      cursor: default;
+      opacity: 0.45;
+    }
+
     @keyframes book-approach {
       0% {
         opacity: 0;
@@ -405,6 +505,31 @@
     }
 
     @media (max-width: 640px) {
+      .bonus-reveal {
+        inset: 5% 2.5%;
+      }
+
+      .bonus-card {
+        width: 91%;
+        max-height: 92%;
+        padding: 11px 14px;
+      }
+
+      .bonus-reveal__text {
+        font-size: clamp(0.66rem, 2.75vw, 0.84rem);
+        line-height: 1.58;
+      }
+
+      .bonus-reveal__secret {
+        margin-top: 0.65em;
+        font-size: clamp(0.5rem, 2.1vw, 0.66rem);
+      }
+
+      .bonus-reveal__button {
+        margin-top: 7px;
+        padding: 7px 22px;
+      }
+
       .book {
         width: min(98vw, calc(82dvh * 4 / 3));
       }
@@ -442,8 +567,8 @@
 </head>
 
 <body>
-  <main class="intro" id="nfc-intro" aria-label="魔法のスケッチブックのアニメーション。画面に触れるとスキップします。">
-    <div class="book" aria-hidden="true">
+  <main class="intro" id="nfc-intro" aria-label="魔法のスケッチブックが開くアニメーションです。">
+    <div class="book">
       <div class="spread">
         <div class="page page--left">
           <img class="page__motion" src="/MagicSketchbookPageL.gif" alt="">
@@ -465,9 +590,18 @@
           <img class="page__still" src="/MagicSketchbookPageL.png" alt="">
         </div>
       </div>
+
+      <section class="bonus-reveal" id="bonus-reveal" role="dialog" aria-labelledby="bonus-reveal-label" aria-describedby="bonus-reveal-text bonus-reveal-secret" aria-hidden="true">
+        <div class="bonus-card">
+          <p class="bonus-reveal__label" id="bonus-reveal-label">ぬいぐるみ特典</p>
+          <p class="bonus-reveal__text" id="bonus-reveal-text"></p>
+          <p class="bonus-reveal__secret" id="bonus-reveal-secret">これはぬいぐるみをスキャンした時にだけ表示される秘密情報です</p>
+          <button class="bonus-reveal__button" id="bonus-reveal-ok" type="button" disabled>OK</button>
+        </div>
+      </section>
     </div>
 
-    <p class="skip-hint" id="skip-hint">画面に触れるとスキップ</p>
+    <p class="skip-hint" id="skip-hint">本が開くまでお待ちください</p>
   </main>
 
   <noscript>
@@ -480,48 +614,81 @@
 
       var intro = document.getElementById('nfc-intro');
       var hint = document.getElementById('skip-hint');
+      var bonusPanel = document.getElementById('bonus-reveal');
+      var bonusLabel = document.getElementById('bonus-reveal-label');
+      var bonusText = document.getElementById('bonus-reveal-text');
+      var secretText = document.getElementById('bonus-reveal-secret');
+      var okButton = document.getElementById('bonus-reveal-ok');
       var destination = window.toudaisanNfcDestination || '/plush/toudaisan/concept/';
+      var selectedBonus = window.toudaisanNfcBonusText || '';
       var hasNavigated = false;
       var animationStarted = false;
-      var canSkip = false;
+      var bonusVisible = false;
       var timers = [];
       var isEnglish = document.documentElement.lang === 'en';
-      var lockedHint = isEnglish ? 'Skip available in 5 seconds' : '5秒後にスキップできます';
-      var readyHint = isEnglish ? 'Touch to skip' : '画面に触れるとスキップ';
+      var reducedMotion = window.matchMedia
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      hint.textContent = lockedHint;
+      bonusLabel.textContent = isEnglish ? 'PLUSH BONUS' : 'ぬいぐるみ特典';
+      bonusText.textContent = selectedBonus;
+      secretText.textContent = isEnglish
+        ? 'This is secret information shown only when you scan the plush.'
+        : 'これはぬいぐるみをスキャンした時にだけ表示される秘密情報です';
+      hint.textContent = isEnglish
+        ? 'Please wait for the book to open'
+        : '本が開くまでお待ちください';
+
       intro.setAttribute(
         'aria-label',
         isEnglish
-          ? 'Magic sketchbook animation. Skipping is available after 5 seconds.'
-          : '魔法のスケッチブックのアニメーション。5秒後からスキップできます。'
+          ? 'An animation of the Magic Sketchbook opening.'
+          : '魔法のスケッチブックが開くアニメーションです。'
       );
 
       function schedule(callback, delay) {
         timers.push(window.setTimeout(callback, delay));
       }
 
-      function goToProfile(force) {
-        if (hasNavigated || (!force && !canSkip)) {
+      function showBonus() {
+        if (bonusVisible || hasNavigated) {
+          return;
+        }
+
+        bonusVisible = true;
+        intro.classList.add('is-bonus-visible');
+        bonusPanel.setAttribute('aria-hidden', 'false');
+        okButton.disabled = false;
+        hint.hidden = true;
+        intro.setAttribute(
+          'aria-label',
+          isEnglish
+            ? 'A plush bonus has appeared inside the Magic Sketchbook. Press OK to open the profile.'
+            : '魔法のスケッチブックの中にぬいぐるみ特典が現れました。OKを押すとプロフィールを開きます。'
+        );
+
+        window.setTimeout(function () {
+          okButton.focus({ preventScroll: true });
+        }, 950);
+      }
+
+      function goToProfile() {
+        if (hasNavigated || !bonusVisible) {
           return;
         }
 
         hasNavigated = true;
         timers.forEach(window.clearTimeout);
+
+        try {
+          window.sessionStorage.removeItem('toudaisan-plush-bonus');
+        } catch (error) {
+          // Navigation still works when temporary storage is unavailable.
+        }
+
         window.location.replace(destination);
       }
 
-      document.addEventListener('pointerdown', function () {
-        goToProfile(false);
-      }, { capture: true });
-      document.addEventListener('touchstart', function () {
-        goToProfile(false);
-      }, { capture: true, passive: true });
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
-          goToProfile(false);
-        }
-      });
+      okButton.addEventListener('click', goToProfile);
 
       function startAnimation() {
         if (animationStarted || hasNavigated) {
@@ -529,6 +696,12 @@
         }
 
         animationStarted = true;
+
+        if (reducedMotion) {
+          intro.classList.add('is-open', 'is-alive');
+          schedule(showBonus, 350);
+          return;
+        }
 
         window.requestAnimationFrame(function () {
           intro.classList.add('is-approaching');
@@ -545,23 +718,10 @@
         }, 4300);
 
         schedule(function () {
-          canSkip = true;
-          hint.textContent = readyHint;
-          intro.setAttribute(
-            'aria-label',
-            isEnglish
-              ? 'Magic sketchbook animation. Touch the screen to skip.'
-              : '魔法のスケッチブックのアニメーション。画面に触れるとスキップします。'
-          );
-        }, 5000);
-
-        schedule(function () {
           intro.classList.add('is-alive');
         }, 7300);
 
-        schedule(function () {
-          goToProfile(true);
-        }, 20000);
+        schedule(showBonus, 8500);
       }
 
       var essentialImages = Array.prototype.slice.call(
@@ -591,7 +751,6 @@
         schedule(startAnimation, 3500);
       }
     })();
-  </script>
-</body>
+  </script>/body>
 
 </html>

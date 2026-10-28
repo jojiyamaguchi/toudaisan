@@ -138,6 +138,12 @@
     }
   };
 
+  window.toudaisanPlushBonuses = bonuses;
+
+  if (!document.querySelector('[data-plush-bonus]')) {
+    return;
+  }
+
   var STORAGE_KEY = 'toudaisan-plush-bonus';
   var parameters = new URLSearchParams(window.location.search);
   var storedBonus = null;
