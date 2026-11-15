@@ -138,6 +138,7 @@
     }
     .character--left::before{left:-5vw}
     .character--right::before{right:-5vw}
+    #tairikuganiLink{top:0}
     #nyukoLink{top:10%}
     #babyLink{top:20%}
     #ancestorLink{top:30%}
@@ -298,9 +299,16 @@
         <img src="/images/stairs.png?v=1" alt="">
       </div>
 
+      <a class="character character--right" id="tairikuganiLink" href="/plush/tairikugani/?lang=jp">
+        <div class="portrait-wrap">
+          <img class="portrait" src="/images/tairikugani.png" alt="タイリクガニ">
+        </div>
+        <div class="nameplate" data-name="tairikugani">タイリクガニ</div>
+      </a>
+
       <a class="character character--left" id="nyukoLink" href="/plush/nyuko/?lang=jp">
         <div class="portrait-wrap">
-          <div class="portrait-placeholder" role="img" aria-label="水色の猫 ニュコ（画像準備中）" data-placeholder>画像準備中</div>
+          <img class="portrait" src="/images/nyco1.png" alt="水色の猫 ニュコ">
         </div>
         <div class="nameplate" data-name="nyuko">水色の猫 ニュコ</div>
       </a>
@@ -397,6 +405,7 @@
         concept:"灯台さん（概念）",
         baby:"灯台の赤ちゃん",
         nyuko:"水色の猫 ニュコ",
+        tairikugani:"タイリクガニ",
         placeholder:"画像準備中",
         creator:"魔法Book",
         creatorAria:"作者プロフィール",
@@ -417,6 +426,7 @@
         concept:"Mr Lighthouse (Concept)",
         baby:"Lighthouse Baby",
         nyuko:"Nyuko, the Blue Cat",
+        tairikugani:"Tairiku-gani",
         placeholder:"Image coming soon",
         creator:"Magic Sketchbook",
         creatorAria:"Creator profile",
@@ -453,7 +463,8 @@
             burnham:"/plush_en/toudaisan/burnham/?lang=en",
             concept:"/plush_en/toudaisan/concept/?lang=en",
             bradley:"/plush_en/toudaisan/bradleyshead/?lang=en",
-            nyuko:"/plush_en/nyuko/?lang=en"
+            nyuko:"/plush_en/nyuko/?lang=en",
+            tairikugani:"/plush_en/tairikugani/?lang=en"
           }
         : {
             ancestor:"/plush/toudaisan/ancestor/?lang=jp",
@@ -464,10 +475,11 @@
             burnham:"/plush/toudaisan/burnham/?lang=jp",
             concept:"/plush/toudaisan/concept/?lang=jp",
             bradley:"/plush/toudaisan/bradleyshead/?lang=jp",
-            nyuko:"/plush/nyuko/?lang=jp"
+            nyuko:"/plush/nyuko/?lang=jp",
+            tairikugani:"/plush/tairikugani/?lang=jp"
           };
 
-      ["ancestor","ishikari","amedee","arahisa","baby","burnham","concept","bradley","nyuko"].forEach(key=>{
+      ["ancestor","ishikari","amedee","arahisa","baby","burnham","concept","bradley","nyuko","tairikugani"].forEach(key=>{
         const link = document.getElementById(key + "Link");
         link.href = routes[key];
         link.querySelector("[data-name]").textContent = t[key];
