@@ -574,6 +574,7 @@
       }
     }
   </style>
+  <script src="/progressive-images.js" defer></script>
 </head>
 
 <body>
@@ -581,23 +582,23 @@
     <div class="book">
       <div class="spread">
         <div class="page page--left">
-          <img class="page__motion" src="/MagicSketchbookPageL.gif" alt="">
-          <img class="page__still" src="/MagicSketchbookPageL.png" alt="">
+          <img class="page__motion" data-gif-src="/MagicSketchbookPageL.gif" alt="">
+          <img class="page__still" src="/previews/MagicSketchbookPageL.webp" data-full-src="/MagicSketchbookPageL.png" alt="">
         </div>
         <div class="page page--right">
-          <img class="page__motion" src="/MagicSketchbookPageR.gif" alt="">
-          <img class="page__still" src="/MagicSketchbookPageR.png" alt="">
+          <img class="page__motion" data-gif-src="/MagicSketchbookPageR.gif" alt="">
+          <img class="page__still" src="/previews/MagicSketchbookPageR.webp" data-full-src="/MagicSketchbookPageR.png" alt="">
         </div>
       </div>
       <div class="spine"></div>
 
       <div class="cover">
         <div class="cover__face cover__front">
-          <img src="/MagicSketchbookCover.png" alt="">
+          <img src="/previews/MagicSketchbookCover.webp" data-full-src="/MagicSketchbookCover.png" alt="">
         </div>
         <div class="cover__face cover__back">
-          <img class="page__motion" src="/MagicSketchbookPageL.gif" alt="">
-          <img class="page__still" src="/MagicSketchbookPageL.png" alt="">
+          <img class="page__motion" data-gif-src="/MagicSketchbookPageL.gif" alt="">
+          <img class="page__still" src="/previews/MagicSketchbookPageL.webp" data-full-src="/MagicSketchbookPageL.png" alt="">
         </div>
       </div>
 
@@ -638,6 +639,7 @@
       var isEnglish = document.documentElement.lang === 'en';
       var reducedMotion = window.matchMedia
         && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var motionLoadPromise = null;
 
       bonusLabel.textContent = isEnglish ? 'PLUSH BONUS' : 'ぬいぐるみ特典';
       bonusText.textContent = selectedBonus;
@@ -657,6 +659,26 @@
 
       function schedule(callback, delay) {
         timers.push(window.setTimeout(callback, delay));
+      }
+
+      function loadMotionPages() {
+        if (motionLoadPromise) {
+          return motionLoadPromise;
+        }
+
+        var motionImages = Array.prototype.slice.call(
+          document.querySelectorAll('.page__motion[data-gif-src]')
+        );
+
+        motionLoadPromise = Promise.all(motionImages.map(function (image) {
+          return new Promise(function (resolve) {
+            image.addEventListener('load', resolve, { once: true });
+            image.addEventListener('error', resolve, { once: true });
+            image.src = image.dataset.gifSrc;
+          });
+        }));
+
+        return motionLoadPromise;
       }
 
       function showBonus() {
@@ -708,7 +730,7 @@
         animationStarted = true;
 
         if (reducedMotion) {
-          intro.classList.add('is-open', 'is-alive');
+          intro.classList.add('is-open');
           schedule(showBonus, 350);
           return;
         }
@@ -725,10 +747,13 @@
         schedule(function () {
           intro.classList.remove('is-opening');
           intro.classList.add('is-open');
+          loadMotionPages();
         }, 4300);
 
         schedule(function () {
-          intro.classList.add('is-alive');
+          loadMotionPages().then(function () {
+            if (!hasNavigated) intro.classList.add('is-alive');
+          });
         }, 7300);
 
         schedule(showBonus, 8500);

@@ -28,6 +28,13 @@
   const candidates = ['jpg', 'jpeg', 'png'].map(
     (extension) => `/images/${stem}_model.${extension}`
   );
+  const modelPreviews = {
+    toudaisan_amedee: '/images/previews/toudaisan_amedee_model.webp',
+    toudaisan_arahisa: '/images/previews/toudaisan_arahisa_model.webp',
+    toudaisan_bradleyshead: '/images/previews/toudaisan_bradleyshead_model.webp',
+    toudaisan_burnham: '/images/previews/toudaisan_burnham_model.webp',
+    toudaisan_ishikari: '/images/previews/toudaisan_ishikari_model.webp'
+  };
   const isJapanese = document.documentElement.lang.toLowerCase().startsWith('ja');
   const description = isJapanese ? '住んでいるところ' : 'Where this character lives';
   let candidateIndex = 0;
@@ -56,7 +63,12 @@
       tryNextImage();
     }, { once: true });
 
-    image.src = candidates[candidateIndex];
+    if (candidateIndex === 0 && modelPreviews[stem]) {
+      image.dataset.fullSrc = candidates[candidateIndex];
+      image.src = modelPreviews[stem];
+    } else {
+      image.src = candidates[candidateIndex];
+    }
   };
 
   tryNextImage();
